@@ -1,0 +1,21 @@
+.footer {
+   position:static;
+   left:0;
+   bottom:0;
+   height:500px;
+   width: 100%;
+   background-color:black;
+   text-align: center;
+}
+
+.qllogo{
+	
+	height:60px;
+	width:60px;
+	position:relative;
+	float:center;
+	top:250px;
+}
+
+
+

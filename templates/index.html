@@ -1,0 +1,640 @@
+﻿{% load static %}
+<html lang="en-us">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="Keywords" content="HTML,CSS,JavaScript,DOM,jQuery,PHP,SQL,XML,Python,Java,Bootstrap,Web,W3CSS,W3C,tutorials,programming,development,training,learning,quiz,primer,lessons,reference,examples,source code,colors,demos,tips,w3c">
+
+<head>
+    <title>Quantum Lab</title>
+    <link rel="icon" type="image/icon type" href="{% static 'Processors/QL.jpg'    %}">
+    <link rel="stylesheet" type="text/css"  href="{% static 'css/style1.css'       %}">
+    <link rel="stylesheet" type="text/css"  href="{% static 'css/style2.css'       %}">
+    <link rel="stylesheet" type="text/css"  href="{% static 'css/style_footer.css' %}">
+    <link rel="stylesheet" type="text/css"  href="{% static 'css/fontawesome.min.css' %}">
+
+    <script src="{% static 'js/index.js' %}"></script>
+
+</head>
+
+<body onload="('WELCOME!')" style="background-color : white;">
+
+    <nav class="nav" id="nav">
+
+
+        <div id="dnav1">
+
+            <a id="lis2"><span id="s2"><i style="color:lime;font-size:32px;">Q</i>uantum LAB</span></a>
+            <a class="li" href="feedback"><span class="lispan">Feedback</span></a>
+            <a class="li"><span class="lispan">About</span></a>
+            <a class="li"><span class="lispan">Services</span></a>
+            <a class="li"><span class="lispan">Contact</span></a>
+
+            <div class="dropdivnav">
+
+                <span class="drop">MORE</span>
+               
+                <div class="dropcontent">
+
+                    <a class="dropcontent-a"><span class="drop">MORE1</span></a>
+                    <a class="dropcontent-a"><span class="drop">MORE2</span></a>
+                    <a class="dropcontent-a"><span class="drop">MORE3</span></a>
+                    <a class="dropcontent-a"><span class="drop">MORE4</span></a>
+                    <a class="dropcontent-a"><span class="drop">MORE5</span></a>
+                    
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        {% if user.is_authenticated %}
+        <div class="user_icon_bar">
+
+            <a href="#" class="user_icon_bar_a"><img src="{% static 'png/003-wordpress.png' %}" class="image"></a>
+            <a href="#" class="user_icon_bar_a"><img src="{% static 'png/039-dropbox.png' %}" class="image"></a>
+            <a href="#" class="user_icon_bar_a"><img src="{% static 'png/021-chat.png' %}" class="image"></a>
+            <a href="#" class="user_icon_bar_a"><img src="{% static 'png/048-notification.png' %}" class="image"></a>
+            <a href="#" class="user_icon_bar_a"><img src="{% static 'png/035-user.png' %}" class="image"></a>
+
+            <div id="user_icon">
+                <span id="user_name">Hello!, {{user.first_name}}</span>
+                <a href="{% url 'accounts:details' user.id %}"><img src="{{request.user.profileimages.propic.url}}" class="user_icon_image"></a>
+            </div>
+        </div>
+        {% endif %}
+
+
+
+    </nav>
+
+   
+
+    <div id="divlogo">
+        <br>
+        <br>
+        <br>
+        <br>
+        <div id="d1"></div>
+
+        {% if user.is_authenticated %}
+        <a href="{% url 'accounts:logout'%}"><button class=" lir1">LOGOUT</button></a>
+
+        {% else %}
+
+        <div id="logreg">
+
+            <a class="ar1" href="accounts/register"><button class="r1" id="r1">SIGN IN</button></a>
+
+            <div class="login">
+                <div class="login_pop" id="login_pop">
+
+                    {% for message in messages %}
+                    <b>{{message}}</b>
+                    {% endfor %}
+                        
+
+                    <form action="{% url 'accounts:login'%}" method="POST" class="form-popup">
+
+                        {% csrf_token %}
+                        <h1 style="color:black; margin-left:15px;">Login</h1>
+                        {% csrf_token %}
+                        <label class="form-popup_font" for="username">Username</label><br><br>
+                        <input class="inputstyle1 inputstyle2" type="text" placeholder="Username" name="username" required>
+                        <br>
+                        <label class="form-popup_font" for="password"><b>Password</b></label><br><br>
+                        <input class="inputstyle1 inputstyle2" type="password" placeholder="Enter Password" name="password" required>
+                        <br>
+                        <button class="form-popup_button" type="submit" class="btn">Login</button>
+
+                    </form>
+
+                </div>
+
+                <div class="b1b2">
+                    <button class="b1" id="close_close" onclick="Close(),Openlogin(),Closeclose()">Close</button>
+                    <button class="b2" id="login_close" onclick="login(),Closelogin(),Openclose()">LOGIN</button>
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endif %}
+
+        <script>
+
+            function login() {
+                document.getElementById('login_pop').style = "display:block;"
+            };
+
+            function Close() {
+                document.getElementById('login_pop').style = "display:none;"
+            };
+
+            function Openlogin() {
+                document.getElementById('login_close').style = "display:block;"
+            };
+
+            function Closelogin() {
+                document.getElementById('login_close').style = "display:none;"
+            };
+
+            function Openclose() {
+                document.getElementById('close_close').style = "display:block;"
+            };
+
+            function Closeclose() {
+                document.getElementById('close_close').style = "display:none;"
+            };
+
+        </script>
+
+        <br>
+        <br>
+
+        <input class="nav-search" type="text" placeholder="Search">
+
+    </div>
+
+
+    <!--navigation bar content--->
+
+    
+
+    <div class="divform" id="fd2">
+        <!--Contact Form-->
+        <div class="form" style="height:400px; width:800px;">
+            <br>
+
+            <div id="con_div_1" class="con_sec_frame" style="display:block;background:#9999ff;">
+                <!-- contact section1-->
+                <span style="font-size:50px; font-family:Segoe UI,Arial,sans-serif; font-weight:bold; position:relative;left:200px;top:10px;"> Contact Us</span>
+                <br>
+                <span style="position:relative;left:120px;top:30px;font-size:35px;">We will get back to you asap!</span>
+                <div class="con_elem_a" onclick="contactswipe1()"><span style="font-size:50px; position:relative; left:170px;">Next</span></div>
+            </div>
+
+            <div id="con_div_2" class="con_sec_frame">
+                <!--contact section2 name-->
+                <span class="con_span_top" style="font-size:25px;color:black;position:relative;left:250px;top:10px;">Full Name</span>
+                <br>
+                <br>
+                <br>
+                <input class="inputstyle1" type="text" placeholder="First Name">
+                <br>
+                <input class="inputstyle1" type="text" placeholder="Last Name">
+                <div style="top:5px;" class="con_sec_bottom"><button onclick="contactswipe4r()" class="con_b_btm_left"><span class="con_span_bottom" style="left:-70px;">Previous</span></button><button onclick="contactswipe2()" class="con_b_btm_right"><span class="con_span_bottom">Next</span></button></div>
+            </div>
+
+            <div id="con_div_3" class="con_sec_frame">
+                <!-- contact section3 email-->
+                <span style="top:30px;left:280px;" class="con_span_top">Email</span>
+                <input style="top:100px;left:30px;" class="inputstyle1" type="email" placeholder="Email">
+                <div class="con_sec_bottom"><button onclick="contactswipe3r()" class="con_b_btm_left"><span class="con_span_bottom" style="left:-70px;">Previous</span></button><button onclick="contactswipe3()" class="con_b_btm_right"><span class="con_span_bottom">Next</span></button></div>
+            </div>
+
+            <div id="con_div_4" class="con_sec_frame">
+                <!-- contact section4 phone-->
+                <span style="top:30px;left:255px;" class="con_span_top">Phone Number</span>
+                <input style="top:100px;left:-45px;" class="inputstyle1" type="number" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
+                <div class="con_sec_bottom"><button onclick="contactswipe2r()" class="con_b_btm_left"><span class="con_span_bottom" style="left:-70px;">Previous</span></button><button onclick="contactswipe4()" class="con_b_btm_right"><span class="con_span_bottom">Next</span></button></div>
+            </div>
+
+            <div id="con_div_5" class="con_sec_frame" style="background:#9999ff;">
+                <!-- contact section5 submit-->
+                <span style="font-size:45px; font-family:Segoe UI,Arial,sans-serif; font-weight:bold; position:relative;left:200px;top:30px;">Thankyou</span>
+                <span style="position:relative;float:center;top:80px;right:100px;font-size:20px;">You may also call us at +91-9999999999</span>
+                <div class="con_sec_bottom"><button onclick="contactswipe1r()" class="con_b_btm_left"><span class="con_span_bottom" style="left:-70px;">Previous</span></button><button onclick="" class="con_b_btm_right"><span class="con_span_bottom">Submit</span></button></div>
+            </div>
+
+
+            <script>
+
+<!--    forward-- ->
+                    function contactswipe1() {
+                        document.getElementById('con_div_2').classList.toggle("swipecontactbar")
+                    };
+
+                function contactswipe2() {
+                    document.getElementById('con_div_3').classList.toggle("swipecontactbar")
+                };
+
+                function contactswipe3() {
+                    document.getElementById('con_div_4').classList.toggle("swipecontactbar")
+                };
+
+                function contactswipe4() {
+                    document.getElementById('con_div_5').classList.toggle("swipecontactbar")
+                };
+
+< !--backward--->
+
+                    function contactswipe1r() {
+                        document.getElementById('con_div_5').classList.toggle("swipecontactbar")
+                    };
+
+                function contactswipe2r() {
+                    document.getElementById('con_div_4').classList.toggle("swipecontactbar")
+                };
+
+                function contactswipe3r() {
+                    document.getElementById('con_div_3').classList.toggle("swipecontactbar")
+                };
+
+                function contactswipe4r() {
+                    document.getElementById('con_div_2').classList.toggle("swipecontactbar")
+                };
+
+            </script>
+
+        </div>
+    </div><!---end-->
+    <!---------------///////////////////////////////-------------------------------------------------------------------------------------------->
+
+    <div class="section_content" style="background-color: rgb(246, 248, 250);height:500px;">
+        <div class="top_section_head">Smarter, faster, better. Meet the latest Snapdragon mobile platforms.</div>
+        <img class="top_section_img" src='{% static "images/top_section.jpg" %}'>
+        <div class="top_section_text">
+            Snapdragon is a suite of system on a chip (SoC) semiconductor products for mobile devices designed and
+            marketed by Qualcomm Technologies Inc. The Snapdragon central processing unit (CPU) uses the ARM RISC. A single SoC may include multiple CPU cores, an Adreno graphics processing unit (GPU), a
+            Snapdragon wireless modem, a Hexagon Digital signal processor (DSP), a Qualcomm Spectra Image
+            Signal Processor (ISP) and other software and hardware.
+        </div>
+
+    </div>
+
+    <div class="section_middle">
+        <!--section middle---------------------------------->
+
+        <div class="section_middle_upper">
+            <img class="middle_section_image" src='{% static "Processors/middle_section.jpg" %}'>
+            <div class="section_middle_upper_text">Snapdragon 8 Series Mobile Platforms</div>
+        </div>
+        <div class="section_middle_lower">
+            <div class="section_middle_lower_text">
+                Qualcomm® Snapdragon™ 8 series mobile platforms with multi-core CPUs can expand the possibilities of
+                connected computing and represent the ultimate in performance, power efficiency and 4G LTE connectivity.
+            </div>
+        </div>
+    </div><!--section middle---------------------------------->
+
+    <br>
+    <br>
+
+    <div class="section_content" style="background-color: rgb(246, 248, 250);">
+        <!--section1A--------------------------------------->
+
+        <div class="content_block_single_left">
+            <img class="content_block_image" src='{% static "Processors/qualcommflagship-1.jpg" %}' alt="Snapdragon 865/865+ 5G">
+        </div>
+        <div class="content_block_single_right">
+            <div class="content_block_single_right_head">Snapdragon 865+ 5G Mobile Platform</div>
+            <div class="content_block_single_right_text">
+                5G connectivity and premium features make the Qualcomm® Snapdragon™ 865+ 5G Mobile Platform any
+                gamer’s greatest weapon. Speeds up to 7.5 Gbps enable seamless streaming from the cloud, while global support allows gamers across the world
+                to battle simultaneously in real-time. Snapdragon Elite Gaming unites PC-quality with mobile convenience, packing updateable GPU drivers,
+                144 Hz display support, desktop-forward rendering, and more.
+            </div>
+            <div class="content_block_single_a">Learn more</div>
+        </div>
+    </div><!--section1A--------------------------------------->
+
+    <div class="section_content">
+        <!--section1B---------------------------------------->
+
+
+        <div class="content_block">
+            <img class="content_block_image" src='{% static "Processors/qualcommflagship-2.jpg" %}' alt="Snapdragon 875/875+ 5G">
+            <div class="content_block_bottom">
+                <div class="content_block_bottom_heading">Snapdragon 875/875+ 5G</div>
+                <div class="content_block_bottom_text" style="font-style:italic;position:relative;left:100px;">Upcoming...</div>
+            </div>
+        </div>
+
+        <div class="content_block">
+            <img class="content_block_image" src='{% static "Processors/qualcommflagship-3.jpg" %}' alt="Snapdragon 855/855+">
+            <div class="content_block_bottom">
+                <div class="content_block_bottom_heading">Snapdragon 855/855+</div>
+                <div class="content_block_bottom_text">Qualcomm® Snapdragon™ 855 Mobile Platform is unlike anything that’s come before harnessing multi-gigabit 4G connectivity.</div>
+            </div>
+        </div>
+
+        <div class="content_block">
+            <img class="content_block_image" src='{% static "Processors/qualcommflagship-4.jpg" %}' alt="Snapdragon 845">
+            <div class="content_block_bottom">
+                <div class="content_block_bottom_heading">Snapdragon 845</div>
+                <div class="content_block_bottom_text">The Snapdragon 845 mobile platform is engineered with the functionality and features that will allow users to do even more with their mobile devices.</div>
+            </div>
+        </div>
+
+        <div class="content_block">
+            <img class="content_block_image" src={% static "Processors/qualcommflagship-5.jpg" %} alt="Snapdragon 835">
+            <div class="content_block_bottom">
+                <div class="content_block_bottom_heading">Snapdragon 835</div>
+                <div class="content_block_bottom_text">
+                    With an advanced 10-nanometer design, the Qualcomm® Snapdragon™ 835 mobile platform can support phenomenal mobile performance.
+                    It is 35% smaller and uses 25% less power than previous designs.
+                </div>
+            </div>
+        </div>
+
+    </div><!--section2---------------------------------------->
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="section_middle">
+        <!--section middle---------------------------------->
+
+        <div class="section_middle_upper">
+            <img class="middle_section_image" src='{% static "Processors/middle_section.jpg" %}'>
+            <div class="section_middle_upper_text">Snapdragon 7 Series Mobile Platforms</div>
+        </div>
+        <div class="section_middle_lower">
+            <div class="section_middle_lower_text">
+                Qualcomm® Snapdragon™ 7 series mobile platforms support in-demand premium features, such as the
+                Qualcomm® Artificial Intelligence Engine (AIE) and advanced camera features, to high- and ultra-high tier
+                for smartphones and other form factors.
+            </div>
+        </div>
+    </div><!--section middle---------------------------------->
+
+    <br>
+    <br>
+
+    <div class="section_content" style="background-color: rgb(246, 248, 250);">
+        <!--section2A--------------------------------------->
+        <div class="content_block_single_left">
+            <img class="content_block_image" src='{% static "Processors/qualcomm_midrange-1.jpg" %}' alt="Snapdragon 768G 5G">
+        </div>
+        <div class="content_block_single_right">
+            <div class="content_block_single_right_head">Snapdragon 768G 5G Mobile Platform</div>
+            <div class="content_block_single_right_text">
+                The Snapdragon 768G Mobile Platform features our 5th generation Qualcomm® Artificial
+                Intelligence (AI) Engine and Qualcomm® Hexagon™ Processor to power realistic gameplay while supporting unique and innovative use cases
+                like real-time translation and ultra-smooth AI-based lens filters for social media apps at astonishing speeds. Plus, blazing-fast 5G with
+                global support means gamers can join a worldwide arena and compete in real time with less lag.
+            </div>
+            <div class="content_block_single_a">Learn more</div>
+        </div>
+    </div><!--section2A--------------------------------------->
+
+    <div class="section_content">
+        <!--section2B--------------------------------------->
+
+        <div class="content_block">
+            <img class="content_block_image" src="{% static 'Processors/qualcomm_midrange-2.jpg'%}" alt="Qualcomm® Snapdragon™ 765G">
+            <div class="content_block_bottom">
+                <div class="content_block_bottom_heading">Snapdragon™ 765/765G</div>
+                <div class="content_block_bottom_text">
+                    Qualcomm® Snapdragon™ 765G mobile platform unites 5G and AI to power select premium experiences for gamers,
+                    including 5G gaming and Qualcomm® Snapdragon Elite Gaming™ features.
+                </div>
+            </div>
+        </div>
+
+        <div class="content_block">
+            <img class="content_block_image" src='{% static "Processors/qualcomm_midrange-3.jpg"%}' alt="Snapdragon 730/730G">
+            <div class="content_block_bottom">
+                <div class="content_block_bottom_heading">Snapdragon 730/730G</div>
+                <div class="content_block_bottom_text">
+                    Select Snapdragon Elite Gaming features for a powerful gaming experience – plus powerful on-device AI,
+                    intuitive image capture, and superior performance.
+                </div>
+            </div>
+        </div>
+
+        <div class="content_block">
+            <img class="content_block_image" src="{% static 'Processors/qualcomm_midrange-4.jpg' %}" alt="Snapdragon 720/720G">
+            <div class="content_block_bottom">
+                <div class="content_block_bottom_heading">Snapdragon 720/720G</div>
+                <div class="content_block_bottom_text">
+                    The Qualcomm® Snapdragon™ 720G Mobile Platform enhances the mobile gaming experience and
+                    Qualcomm® Snapdragon Elite Gaming™ features.
+                </div>
+            </div>
+        </div>
+
+        <div class="content_block">
+            <img class="content_block_image" src="{% static 'Processors/qualcomm_midrange-5.jpg' %}" alt="Snapdragon 712">
+            <div class="content_block_bottom">
+                <div class="content_block_bottom_heading">Snapdragon 712</div>
+                <div class="content_block_bottom_text">
+                    The Qualcomm® Snapdragon™ 712 Mobile Platform is engineered for key experiences on mobile devices: AI,
+                    gaming, performance, and power.
+                </div>
+            </div>
+        </div>
+
+    </div><!--section3---------------------------------------->
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="section_middle">
+        <!--section middle---------------------------------->
+
+        <br>
+        <br>
+
+        <div class="section_middle_upper">
+            <img class="middle_section_image" src="{% static 'Processors/middle_section.jpg' %}">
+            <div class="section_middle_upper_text">Snapdragon 6 Series Mobile Platforms</div>
+        </div>
+        <div class="section_middle_lower">
+            <div class="section_middle_lower_text">
+                Qualcomm® Snapdragon™ 6 series mobile platforms are designed for performance, efficiency and
+                versatility by offering superior mobile user experiences in a variety of form factors,
+                from smartphones and tablets to embedded designs and connected cars.
+            </div>
+        </div>
+    </div><!--section middle---------------------------------->
+
+    <br>
+    <br>
+
+    <div class="section_content" style="background-color: rgb(246, 248, 250);">
+        <!--section3A--------------------------------------->
+        <div class="content_block_single_left">
+            <img class="content_block_image" src="{% static 'Processors/qualcomm_lower_midrange-1.jpg' %}" alt="Snapdragon 690 5G Mobile Platform">
+        </div>
+        <div class="content_block_single_right">
+            <div class="content_block_single_right_head">Snapdragon 690 5G Mobile Platform</div>
+            <div class="content_block_single_right_text">
+                Helping to make 5G accessible to more people than ever before. It is smarter, faster, and more
+                impressive than its predecessor, packing remarkable on-device AI and vibrant entertainment experiences
+                backed by efficient performance.
+            </div>
+            <div class="content_block_single_a">Learn more</div>
+        </div>
+    </div><!--section3A--------------------------------------->
+
+    <div class="section_content">
+        <!--section3B---------------------------------------->
+
+
+        <div class="content_block">
+            <img class="content_block_image" src="{% static 'Processors/qualcomm_lower_midrange-2.jpg' %}" alt="Snapdragon 675">
+            <div class="content_block_bottom">
+                <div class="content_block_bottom_heading">Snapdragon 675</div>
+                <div class="content_block_bottom_text">
+                    The Qualcomm® Snapdragon™ 675 Mobile Platform comes loaded with outstanding gaming capabilities,
+                    stellar camera features, AI smarts and powerful performance.
+                </div>
+            </div>
+        </div>
+
+        <div class="content_block">
+            <img class="content_block_image" src="{% static 'Processors/qualcomm_lower_midrange-3.jpg' %}" alt="Snapdragon 670">
+            <div class="content_block_bottom">
+                <div class="content_block_bottom_heading">Snapdragon 670</div>
+                <div class="content_block_bottom_text">
+                    The feature-rich Qualcomm® Snapdragon™ 670 mobile platform gives smartphone consumers
+                    more to play with throughout their day, quickly and efficiently.
+                </div>
+            </div>
+        </div>
+
+        <div class="content_block">
+            <img class="content_block_image" src="{% static 'Processors/qualcomm_lower_midrange-4.jpg' %}" alt="Snapdragon 665">
+            <div class="content_block_bottom">
+                <div class="content_block_bottom_heading">Snapdragon 665</div>
+                <div class="content_block_bottom_text">
+                    Enhanced mobile experiences with AI, to improve gaming, camera capabilities,
+                    performance, and security performance.
+                </div>
+            </div>
+        </div>
+
+        <div class="content_block">
+            <img class="content_block_image" src="{% static 'Processors/qualcomm_lower_midrange-5.jpg' %}" alt="Snapdragon 662">
+            <div class="content_block_bottom">
+                <div class="content_block_bottom_heading">Snapdragon 662</div>
+                <div class="content_block_bottom_text">
+                    The Qualcomm® Snapdragon™ 662 Mobile Platform delivers brilliant mobile experiences never before seen
+                    in this tier.
+                </div>
+            </div>
+        </div>
+
+    </div><!--section4---------------------------------------->
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="section_middle">
+        <!--section middle---------------------------------->
+
+        <div class="section_middle_upper">
+            <img class="middle_section_image" src="{% static 'Processors/middle_section.jpg' %}">
+            <div class="section_middle_upper_text">Snapdragon 4 Series Mobile Platforms</div>
+        </div>
+        <div class="section_middle_lower">
+            <div class="section_middle_lower_text">
+                Qualcomm® Snapdragon™ 4 series mobile platforms are designed to support the most popular smartphone
+                and IoT features, including comprehensive Internet connections, cutting-edge camera technologies,
+                Full HD displays, and high-fidelity audio.
+            </div>
+        </div>
+    </div><!--section middle---------------------------------->
+
+    <br>
+    <br>
+
+    <div class="section_content" style="background-color: rgb(246, 248, 250);">
+        <!--section4A--------------------------------------->
+        <div class="content_block_single_left">
+            <img class="content_block_image" src="{% static 'Processors/qualcomm_budget-1.jpg' %}" alt="Snapdragon 460 Mobile Platform">
+        </div>
+        <div class="content_block_single_right">
+            <div class="content_block_single_right_head">Snapdragon 460 Mobile Platform</div>
+            <div class="content_block_single_right_text">
+                The Qualcomm® Snapdragon™ 460 Mobile Platform delivers impressive mobile experiences with
+                gigantic performance leaps, first-in-tier AI, and feature-packed camera experiences.This is our first 4-series mobile platform to
+                come fully loaded with Qualcomm® FastConnect™ 6100, which combines high-performing technologies in one connectivity sub-system.
+            </div>
+            <div class="content_block_single_a">Learn more</div>
+        </div>
+    </div><!--section4A--------------------------------------->
+
+    <div class="section_content">
+        <!--section4B---------------------------------------->
+
+        <div class="content_block">
+            <img class="content_block_image" src="{% static 'Processors/qualcomm_budget-2.jpg' %}" alt="Snapdragon 450">
+            <div class="content_block_bottom">
+                <div class="content_block_bottom_heading">Snapdragon 450</div>
+                <div class="content_block_bottom_text">
+                    The Qualcomm® Snapdragon™ 450 mobile platform uses leading-edge 14 nm technology to power
+                    premium experiences in high-tier smartphones without draining the battery.
+                </div>
+            </div>
+        </div>
+
+        <div class="content_block">
+            <img class="content_block_image" src="{% static 'Processors/qualcomm_budget-3.jpg'%}" alt="Snapdragon 439">
+            <div class="content_block_bottom">
+                <div class="content_block_bottom_heading">Snapdragon 439</div>
+                <div class="content_block_bottom_text">
+                    the Qualcomm® Snapdragon™ 439 mobile platform is designed to support speedy downloads
+                    and uploads, stunning graphics and photos, and power-saving performance.
+                </div>
+            </div>
+        </div>
+
+        <div class="content_block">
+            <img class="content_block_image" src="{% static 'Processors/qualcomm_budget-4.jpg' %}" alt="Snapdragon 435">
+            <div class="content_block_bottom">
+                <div class="content_block_bottom_heading">Snapdragon 435</div>
+                <div class="content_block_bottom_text">
+                    Keeping up with today’s life on the go, the Qualcomm® Snapdragon™ 435 mobile platform integrates
+                    a Qualcomm® Snapdragon™ X9 LTE modem with support for Cat 7 downlink speeds up to 300 Mbps.
+                </div>
+            </div>
+        </div>
+
+        <div class="content_block">
+            <img class="content_block_image" src="{% static 'Processors/qualcomm_budget-5.jpg' %}" alt="Snapdragon 429">
+            <div class="content_block_bottom">
+                <div class="content_block_bottom_heading">Snapdragon 429</div>
+                <div class="content_block_bottom_text">
+                    The Qualcomm® Snapdragon™ 429 mobile platform is redefining the entry-point of mid-tier platforms.
+                    With 802.11ac Wi-Fi with MU-MIMO, a 64-bit Arm Cortex CPU, and a 16MP camera.
+                </div>
+            </div>
+        </div>
+
+    </div><!--section5---------------------------------------->
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+    <footer class="footer">
+        <img class="qllogo" src="{% static 'Processors/QL.jpg' %}" alt="logo">
+    </footer>
+
+</body>
+</html>

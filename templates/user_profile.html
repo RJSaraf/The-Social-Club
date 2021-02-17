@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/user_profile.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/w3.css' %}">
+
+    
+
+
+</head>
+<body>
+
+ <div class="w3-bar-item w3-button w3-mobile nav">
+
+    profile
+
+ </div>
+
+
+
+ <div class="section_A ">
+
+  <div class="section1" >
+
+    <img src="{{request.user.profileimages.propic.url}}" id="profile_image">
+
+
+
+
+
+
+
+
+  </div>
+
+
+  <div class="section2">
+
+   <div class="section2_1">
+
+       <div class="user_npl">
+
+           <span class="username">{{user.first_name.upper}} {{ user.last_name.upper}}</span>
+           <span class="userlocation tcenter"><img class="smallimg" src="{% static 'png/006-pin.png' %}">JABALPUR, M.P.</span>
+            
+           <span class="userprofession">{{detail.profession}}</span>
+          
+           <div class="starrating">
+
+               <span class="starspan">7.0</span>
+               <div class="stars">
+                   <img class="starimg" src="{% static 'png/star-3-240.png' %}">
+                   <img class="starimg" src="{% static 'png/star-3-240.png' %}">
+                   <img class="starimg" src="{% static 'png/star-3-240.png' %}">
+                   <img class="starimg" src="{% static 'png/star-thin-240.png' %}">
+                   <img class="starimg" src="{% static 'png/star-thin-240.png' %}">
+               </div>
+
+
+           </div>
+
+       </div>
+
+     <div class="sm_con_re">
+
+         <span class="sm_con_re_span">Send Message</span>
+         <span class="sm_con_re_span">Contact</span>
+         <span class="sm_con_re_span">Report</span>
+
+     </div>
+
+    </div>
+
+   <div class="section2_2">
+
+       <div class="shift_info">
+           <div class="w3-container">
+           <div class="w3-col m3 w3-margin"><img>Personal Info</div>
+           <div class="w3-col m3 w3-margin"><img><button onclick="show()">Contact</button></div>
+           <div class="w3-col m3 w3-margin"><img>Activity</div>
+           </div>
+       </div>
+       <br>
+       <div class="user_detail">
+
+           <div class="w3-row  w3-padding-8">
+               <div class="w3-col m3 w3-padding-16 w3-margin ">Name</div>
+               <div class="w3-col m7 w3-padding-16 w3-margin ">{{user.first_name.upper}} {{user.last_name.upper}}</div>
+           </div>
+           <div class="w3-row  w3-padding-8">
+               <div class="w3-col m3 w3-padding-16 w3-margin ">Birth Date</div>
+               <div class="w3-col m7 w3-padding-16 w3-margin ">{{detail.birth_date}}</div>
+           </div>
+
+           <div class="w3-row  w3-padding-8">
+               <div class="w3-col m3 w3-padding-16 w3-margin ">Gender</div>
+               <div class="w3-col m7 w3-padding-16 w3-margin ">{{detail.gender}}</div>
+           </div>
+
+           <div class="w3-row  w3-padding-8">
+               <div class="w3-col m3  w3-padding-16 w3-margin ">Age</div>
+               <div class="w3-col m7  w3-padding-16 w3-margin ">{{detail.age}}</div>
+           </div>
+
+           <div class="w3-row  w3-padding-8">
+               <div class="w3-col m3  w3-padding-16 w3-margin ">Profession</div>
+               <div class="w3-col m7  w3-padding-16 w3-margin ">{{detail.profession}}</div>
+           </div>
+
+       </div>
+
+
+       <div class="user_detail_2" id="user_detail_22">
+
+           <div class="w3-row  w3-padding-8">
+               <div class="w3-col m3 w3-padding-16 w3-margin ">Username</div>
+               <div class="w3-col m7 w3-padding-16 w3-margin ">{{user.username}}</div>
+           </div>
+
+           <div class="w3-row  w3-padding-8">
+               <div class="w3-col m3 w3-padding-16 w3-margin ">Mobile NO.</div>
+               <div class="w3-col m7 w3-padding-16 w3-margin ">{{detail.phone_number}}</div>
+           </div>
+
+           <div class="w3-row  w3-padding-8">
+               <div class="w3-col m3 w3-padding-16 w3-margin ">Email:</div>
+               <div class="w3-col m7 w3-padding-16 w3-margin ">{{user.email}}</div>
+           </div>
+
+           <div class="w3-row  w3-padding-8">
+               <div class="w3-col m3  w3-padding-16 w3-margin ">Address</div>
+               <div class="w3-col m7  w3-padding-16 w3-margin ">{{detail.address}}</div>
+           </div>
+
+           <div class="w3-row  w3-padding-8">
+               <div class="w3-col m3  w3-padding-16 w3-margin ">Country</div>
+               <div class="w3-col m7  w3-padding-16 w3-margin ">{{detail.country}}</div>
+           </div>
+
+       </div>
+
+       <script>
+
+           function show() {
+               document.getElementById('user_detail_22').classList.toggle("mystyle");
+           };
+
+
+       </script>
+
+
+
+
+
+
+   </div>
+
+ </div>
+
+
+</body>
+</html>
