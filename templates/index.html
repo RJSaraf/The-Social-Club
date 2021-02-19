@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css"  href="{% static 'css/style2.css'       %}">
     <link rel="stylesheet" type="text/css"  href="{% static 'css/style_footer.css' %}">
     <link rel="stylesheet" type="text/css"  href="{% static 'css/fontawesome.min.css' %}">
-
+   
     <script src="{% static 'js/index.js' %}"></script>
 
 </head>
@@ -69,7 +69,7 @@
 
     </nav>
 
-   
+   {% block body_block %}
 
     <div id="divlogo">
         <br>
@@ -569,7 +569,9 @@
             </div>
             <div class="content_block_single_a">Learn more</div>
         </div>
-    </div><!--section4A--------------------------------------->
+    </div>
+    
+    <!--section4A--------------------------------------->
 
     <div class="section_content">
         <!--section4B---------------------------------------->
@@ -635,6 +637,6 @@
     <footer class="footer">
         <img class="qllogo" src="{% static 'Processors/QL.jpg' %}" alt="logo">
     </footer>
-
+{% endblock %}
 </body>
 </html>

@@ -38,7 +38,7 @@
 	height: 290px;
 	width: 280px;
 	margin-left: 55px;
-	margin-top: 110px;
+	margin-top: 140px;
 	border-radius: 6px 6px 6px 6px;
 	box-shadow: 0 3px 6px 0 black;
 
@@ -163,7 +163,6 @@
 	font-size:30px;
 	font-family:'Modern No. 20';
 	text-align:center;
-	border:1px solid black;
 }
 
 
@@ -182,53 +181,69 @@
 .shift_info {
 
 	position: relative;
-	height: 55px;
+	height: 40px;
 	width: 800px;
 	margin-left:90px;
+	margin-top: 40px;
+	border-bottom: 2px groove gray;
 }
 
 .shift_info_section {
 	display:inline-block;
 	position: relative;
-	height: 50px;
-	width: 150px;
-	margin-left:10px;
-}
-
-.sis_sppan{
-
-	font-family:monospace;
-	font-size:25px;
-	color:black;
-    position:relative;
-	top:15px;
+	height: 40px;
+	width: auto;
+	margin-right:20px;
 }
 
 .user_detail {
 	position: absolute;
-	height: 555px;
+	height: 600px;
 	width: 700px;
 	margin-left:85px;
 	z-index:1;
-	background-color:red;
+
 }
 
 
 .user_detail_2 {
-	display: none;
+	
 	position: absolute;
-	height: 555px;
+	height: 600px;
 	width: 700px;
 	margin-left: 85px;
 	z-index: 2;
-	background-color: blue;
+	
 }
 
+.user_detail_3 {
+	
+	position: absolute;
+	height: 400px;
+	width: 700px;
+	margin-left: 85px;
+	z-index: 3;
+	background-color: rgb(0, 255, 21);
+}
 
+.tabcontent {
+	display: none;
+	
+  }
 
+.tabcontent {
+	animation: fadeEffect 1s; /* Fading effect takes 1 second */
+  }
+  
+/* Go from zero to full opacity */
+@keyframes fadeEffect {
+	from {opacity: 0;}
+	to {opacity: 1;}
+  }
+.pca.active	{
 
-
-
+	border-bottom: 2px groove#2196F3;
+}
 
 
 /* frames  ---------------------------------------------------------------------*/

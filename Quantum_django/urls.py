@@ -24,7 +24,6 @@ from homepage import views
 urlpatterns = [
     url(r"^$", views.HomeView.as_view()),
     url(r"^admin/", admin.site.urls),
-    path('testpage/', include ('testpage.urls')),
     path('accounts/', include ('accounts.urls')),
 
 ]

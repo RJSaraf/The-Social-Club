@@ -14,6 +14,7 @@
 </head>
 <body>
 
+
  <div class="w3-bar-item w3-button w3-mobile nav">
 
     profile
@@ -47,7 +48,7 @@
            <span class="username">{{user.first_name.upper}} {{ user.last_name.upper}}</span>
            <span class="userlocation tcenter"><img class="smallimg" src="{% static 'png/006-pin.png' %}">JABALPUR, M.P.</span>
             
-           <span class="userprofession">{{detail.profession}}</span>
+           <span class="userprofession w3-text-blue">{{detail.profession}}</span>
           
            <div class="starrating">
 
@@ -78,77 +79,90 @@
    <div class="section2_2">
 
        <div class="shift_info">
-           <div class="w3-container">
-           <div class="w3-col m3 w3-margin"><img>Personal Info</div>
-           <div class="w3-col m3 w3-margin"><img><button onclick="show()">Contact</button></div>
-           <div class="w3-col m3 w3-margin"><img>Activity</div>
-           </div>
+           
+           <div class="shift_info_section"><img><a class="pca w3-padding-16 tablinks" onclick="openCity(event, 'Personal')">Personal Info</a></div>
+           <div class="shift_info_section"><img><a class="pca w3-padding-16 tablinks" onclick="openCity(event, 'Contact')">Contact</a></div>
+           <div class="shift_info_section"><img><a class="pca w3-padding-16 tablinks" onclick="openCity(event, 'Activity')">Activity</a></div>
+           
        </div>
        <br>
-       <div class="user_detail">
+       <div class="user_detail w3-container tabcontent" id="Personal">
 
            <div class="w3-row  w3-padding-8">
-               <div class="w3-col m3 w3-padding-16 w3-margin ">Name</div>
-               <div class="w3-col m7 w3-padding-16 w3-margin ">{{user.first_name.upper}} {{user.last_name.upper}}</div>
+               <div class="w3-col m3 w3-padding-16  ">Name:</div>
+               <div class="w3-col m7 w3-padding-16  w3-text-blue">{{user.first_name.upper}} {{user.last_name.upper}}</div>
            </div>
            <div class="w3-row  w3-padding-8">
-               <div class="w3-col m3 w3-padding-16 w3-margin ">Birth Date</div>
-               <div class="w3-col m7 w3-padding-16 w3-margin ">{{detail.birth_date}}</div>
-           </div>
-
-           <div class="w3-row  w3-padding-8">
-               <div class="w3-col m3 w3-padding-16 w3-margin ">Gender</div>
-               <div class="w3-col m7 w3-padding-16 w3-margin ">{{detail.gender}}</div>
+               <div class="w3-col m3 w3-padding-16  ">Birth Date:</div>
+               <div class="w3-col m7 w3-padding-16  ">{{detail.birth_date}}</div>
            </div>
 
            <div class="w3-row  w3-padding-8">
-               <div class="w3-col m3  w3-padding-16 w3-margin ">Age</div>
-               <div class="w3-col m7  w3-padding-16 w3-margin ">{{detail.age}}</div>
+               <div class="w3-col m3 w3-padding-16  ">Gender:</div>
+               <div class="w3-col m7 w3-padding-16  ">{{detail.gender}}</div>
            </div>
 
            <div class="w3-row  w3-padding-8">
-               <div class="w3-col m3  w3-padding-16 w3-margin ">Profession</div>
-               <div class="w3-col m7  w3-padding-16 w3-margin ">{{detail.profession}}</div>
+               <div class="w3-col m3  w3-padding-16  ">Age:</div>
+               <div class="w3-col m7  w3-padding-16  ">{{detail.age}}</div>
+           </div>
+
+           <div class="w3-row  w3-padding-8">
+               <div class="w3-col m3  w3-padding-16  ">Profession:</div>
+               <div class="w3-col m7  w3-padding-16  w3-text-blue">{{detail.profession}}</div>
            </div>
 
        </div>
 
 
-       <div class="user_detail_2" id="user_detail_22">
+       <div class="user_detail_2 w3-container tabcontent" id="Contact">
 
            <div class="w3-row  w3-padding-8">
-               <div class="w3-col m3 w3-padding-16 w3-margin ">Username</div>
-               <div class="w3-col m7 w3-padding-16 w3-margin ">{{user.username}}</div>
+               <div class="w3-col m3 w3-padding-16  ">Username:</div>
+               <div class="w3-col m7 w3-padding-16  ">{{user.username}}</div>
            </div>
 
            <div class="w3-row  w3-padding-8">
-               <div class="w3-col m3 w3-padding-16 w3-margin ">Mobile NO.</div>
-               <div class="w3-col m7 w3-padding-16 w3-margin ">{{detail.phone_number}}</div>
+               <div class="w3-col m3 w3-padding-16  ">Mobile:</div>
+               <div class="w3-col m7 w3-padding-16  w3-text-blue">{{detail.phone_number}}</div>
            </div>
 
            <div class="w3-row  w3-padding-8">
-               <div class="w3-col m3 w3-padding-16 w3-margin ">Email:</div>
-               <div class="w3-col m7 w3-padding-16 w3-margin ">{{user.email}}</div>
+               <div class="w3-col m3 w3-padding-16  ">Email:</div>
+               <div class="w3-col m7 w3-padding-16  w3-text-blue">{{user.email}}</div>
            </div>
 
            <div class="w3-row  w3-padding-8">
-               <div class="w3-col m3  w3-padding-16 w3-margin ">Address</div>
-               <div class="w3-col m7  w3-padding-16 w3-margin ">{{detail.address}}</div>
+               <div class="w3-col m3  w3-padding-16  ">Address:</div>
+               <div class="w3-col m7  w3-padding-16  ">{{detail.address}}</div>
            </div>
 
            <div class="w3-row  w3-padding-8">
-               <div class="w3-col m3  w3-padding-16 w3-margin ">Country</div>
-               <div class="w3-col m7  w3-padding-16 w3-margin ">{{detail.country}}</div>
+               <div class="w3-col m3  w3-padding-16  ">Country:</div>
+               <div class="w3-col m7  w3-padding-16  ">{{detail.country}}</div>
            </div>
 
+       </div>
+
+       <div class="user_detail_3 w3-container tabcontent" id="Activity">
        </div>
 
        <script>
 
-           function show() {
-               document.getElementById('user_detail_22').classList.toggle("mystyle");
-           };
-
+           function openCity(evt, cityName) {
+            var i, tabcontent, tablinks;
+             tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+               tabcontent[i].style.display = "none";
+             }
+             tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+             tablinks[i].className = tablinks[i].className.replace(" active", "");
+             }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+           
+           }  
 
        </script>
 
