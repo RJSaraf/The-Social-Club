@@ -1,33 +1,16 @@
+{% extends 'index.html' %}
+{% block body_block %}
 {% load static %}
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Profile</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <link rel="stylesheet" type="text/css" href="{% static 'css/user_profile.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/w3.css' %}">
-
-    
-
-
-</head>
-<body>
-
-
- <div class="w3-bar-item w3-button w3-mobile nav">
-
-    profile
-
- </div>
-
 
 
  <div class="section_A ">
 
+<div class= "section_back" > </div>
+
   <div class="section1" >
 
-    <img src="{{request.user.profileimages.propic.url}}" id="profile_image">
+    <img src="{{request.user.profileimages.propic.url}}" class="w3-hover-grayscale" id="profile_image">
 
 
 
@@ -48,7 +31,7 @@
            <span class="username">{{user.first_name.upper}} {{ user.last_name.upper}}</span>
            <span class="userlocation tcenter"><img class="smallimg" src="{% static 'png/006-pin.png' %}">JABALPUR, M.P.</span>
             
-           <span class="userprofession w3-text-blue">{{detail.profession}}</span>
+           <span class="userprofession w3-text-light w3-text-deep-orange">{{detail.profession}}</span>
           
            <div class="starrating">
 
@@ -80,13 +63,13 @@
 
        <div class="shift_info">
            
-           <div class="shift_info_section"><img><a class="pca w3-padding-16 tablinks" onclick="openCity(event, 'Personal')">Personal Info</a></div>
-           <div class="shift_info_section"><img><a class="pca w3-padding-16 tablinks" onclick="openCity(event, 'Contact')">Contact</a></div>
-           <div class="shift_info_section"><img><a class="pca w3-padding-16 tablinks" onclick="openCity(event, 'Activity')">Activity</a></div>
+           <div class="shift_info_section"><img class="sisimg" src="{% static 'png/user.png' %}"><a class="pca w3-padding-16 tablinks" onclick="openCity(event, 'Personal')">Personal Info</a></div>
+           <div class="shift_info_section"><img class="sisimg" src="{% static 'png/identification.png' %}"><a class="pca w3-padding-16 tablinks" onclick="openCity(event, 'Contact')">Contact</a></div>
+           <div class="shift_info_section"><img class="sisimg" src="{% static 'png/sketchbook.png' %}"><a class="pca w3-padding-16 tablinks" onclick="openCity(event, 'Activity')">Activity</a></div>
            
        </div>
        <br>
-       <div class="user_detail w3-container tabcontent" id="Personal">
+       <div class="user_detail w3-container tabcontent w3-animate-right" id="Personal">
 
            <div class="w3-row  w3-padding-8">
                <div class="w3-col m3 w3-padding-16  ">Name:</div>
@@ -115,7 +98,7 @@
        </div>
 
 
-       <div class="user_detail_2 w3-container tabcontent" id="Contact">
+       <div class="user_detail_2 w3-container tabcontent w3-animate-right" id="Contact">
 
            <div class="w3-row  w3-padding-8">
                <div class="w3-col m3 w3-padding-16  ">Username:</div>
@@ -144,7 +127,10 @@
 
        </div>
 
-       <div class="user_detail_3 w3-container tabcontent" id="Activity">
+       <div class="user_detail_3 w3-container tabcontent w3-animate-right" id="Activity">
+        
+        no activities yet...
+
        </div>
 
        <script>
@@ -175,6 +161,4 @@
 
  </div>
 
-
-</body>
-</html>
+{% endblock %}

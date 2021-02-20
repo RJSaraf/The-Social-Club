@@ -92,7 +92,7 @@ dnav1 a {
 }
 
 
-.nav{
+.navigation{
 	background:black;
 	width:1340px;
 	height:42px;
@@ -573,7 +573,7 @@ dnav1 a {
 	
 	background:#00cc00;
 	height:50px;
-	width;100%;
+	width:100%;
 	position:relative;
 	top:130px;
 	}

@@ -6,19 +6,22 @@
 
 <head>
     <title>Quantum Lab</title>
-    <link rel="icon" type="image/icon type" href="{% static 'Processors/QL.jpg'    %}">
-    <link rel="stylesheet" type="text/css"  href="{% static 'css/style1.css'       %}">
-    <link rel="stylesheet" type="text/css"  href="{% static 'css/style2.css'       %}">
-    <link rel="stylesheet" type="text/css"  href="{% static 'css/style_footer.css' %}">
-    <link rel="stylesheet" type="text/css"  href="{% static 'css/fontawesome.min.css' %}">
+        <link rel="icon" type="image/icon type" href="{% static 'Processors/QL.jpg'    %}">
+        <link rel="stylesheet" type="text/css"  href="{% static 'css/style1.css'       %}">
+        <link rel="stylesheet" type="text/css"  href="{% static 'css/style2.css'       %}">
+        <link rel="stylesheet" type="text/css"  href="{% static 'css/style_footer.css' %}">
+        <link rel="stylesheet" type="text/css"  href="{% static 'css/fontawesome.min.css' %}">
    
-    <script src="{% static 'js/index.js' %}"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/user_profile.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/w3.css' %}">
+
+        <script src="{% static 'js/index.js' %}"></script>
 
 </head>
 
 <body onload="('WELCOME!')" style="background-color : white;">
 
-    <nav class="nav" id="nav">
+    <nav class="navigation" id="nav">
 
 
         <div id="dnav1">
@@ -65,9 +68,9 @@
         </div>
         {% endif %}
 
-
-
     </nav>
+
+
 
    {% block body_block %}
 
@@ -623,6 +626,7 @@
     </div><!--section5---------------------------------------->
 
 
+
     <br>
     <br>
     <br>
@@ -637,6 +641,8 @@
     <footer class="footer">
         <img class="qllogo" src="{% static 'Processors/QL.jpg' %}" alt="logo">
     </footer>
+
 {% endblock %}
+
 </body>
 </html>
