@@ -11,10 +11,6 @@
         <link rel="stylesheet" type="text/css"  href="{% static 'css/style2.css'       %}">
         <link rel="stylesheet" type="text/css"  href="{% static 'css/style_footer.css' %}">
         <link rel="stylesheet" type="text/css"  href="{% static 'css/fontawesome.min.css' %}">
-   
-        <link rel="stylesheet" type="text/css" href="{% static 'css/user_profile.css' %}">
-        <link rel="stylesheet" type="text/css" href="{% static 'css/w3.css' %}">
-
         <script src="{% static 'js/index.js' %}"></script>
 
 </head>
@@ -55,11 +51,11 @@
         {% if user.is_authenticated %}
         <div class="user_icon_bar">
 
-            <a href="#" class="user_icon_bar_a"><img src="{% static 'png/003-wordpress.png' %}" class="image"></a>
-            <a href="#" class="user_icon_bar_a"><img src="{% static 'png/039-dropbox.png' %}" class="image"></a>
-            <a href="#" class="user_icon_bar_a"><img src="{% static 'png/021-chat.png' %}" class="image"></a>
-            <a href="#" class="user_icon_bar_a"><img src="{% static 'png/048-notification.png' %}" class="image"></a>
-            <a href="#" class="user_icon_bar_a"><img src="{% static 'png/035-user.png' %}" class="image"></a>
+            <a href="#" class="user_icon_bar_a"><img src="{% static 'png/003-wordpress.png' %}" class="iconimg"></a>
+            <a href="#" class="user_icon_bar_a"><img src="{% static 'png/039-dropbox.png' %}" class="iconimg"></a>
+            <a href="#" class="user_icon_bar_a"><img src="{% static 'png/021-chat.png' %}" class="iconimg"></a>
+            <a href="#" class="user_icon_bar_a"><img src="{% static 'png/048-notification.png' %}" class="iconimg"></a>
+            <a href="#" class="user_icon_bar_a"><img src="{% static 'png/035-user.png' %}" class="iconimg"></a>
 
             <div id="user_icon">
                 <span id="user_name">Hello!, {{user.first_name}}</span>
