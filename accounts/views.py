@@ -12,16 +12,19 @@ from . import models
 def register(request):
  return render(request,'register.html')
 
+@login_required
 def logout(request):
     auth.logout(request)
     return redirect('/')
-
 
 class UserView(DetailView):
    context_object_name = 'detail'
    model = models.UserInfo
    template_name = "user_profile.html"
    
+class FeedbackView(TemplateView):
+   template_name = "feedback.html"
+
 
 def savedata(request):
 

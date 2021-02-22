@@ -8,7 +8,7 @@ from accounts.models import UserInfo
 app_name = 'homepage'
 
 urlpatterns = [
-path('feedback',  views.feedback,  name= 'feedback'),
-url(r"^/$", views.HomeView.as_view(), name='homepage') 
+url(r"^/$", views.HomeView.as_view(), name='home'),
+url(r"^edit/$", views.EditView.as_view(), name='edit'),
 
 ]

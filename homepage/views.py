@@ -12,9 +12,7 @@ from accounts.models import UserInfo
 
 class HomeView(TemplateView):
  template_name = "index.html"
-   
 
-
-
-def feedback(request):
-    return render(request,'Feedback.html')
+class EditView(TemplateView):
+     template_name = "EditUserInfo.html"
+ 

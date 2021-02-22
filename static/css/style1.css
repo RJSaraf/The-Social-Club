@@ -304,7 +304,7 @@ dnav1 a {
 
 .divform{
 	
-	display: none; /* Hidden by default */
+	display: block; /* Hidden by default */
 	position: fixed; /* Stay in place */
 	z-index: 1; /* Sit on top */
 	left: 0;
@@ -337,35 +337,6 @@ dnav1 a {
 	float: right;
 	top: 50px;
 	right: 15px;
-}
-
-
-.lir1 {
-	display: inline-block;
-	padding: 4px;
-	font-family: Segoe UI,Arial,sans-serif;
-	color: white;
-	font-size: 20px;
-	border-radius: 2px 2px 2px 2px;
-	background: lime;
-	border: none;
-	font-weight: bold;
-	width: 100px;
-	cursor: hand;
-	border-radius: 3px 3px 3px 3px;
-	transition: 1.0s;
-	box-shadow: 0 3px 6px 0 black;
-	position:relative;
-	top:420px;
-	right:50px;
-	float:right;
-}
-
-.lir1:hover {
-	background: #0080ff;
-	width: 150px;
-	box-shadow: 0 5px 8px 0 black;
-	transition: 0.5s;
 }
 
 .ar1 {
@@ -734,12 +705,12 @@ dnav1 a {
 
 
 .user_icon_bar {
-	width:627px; /* Full-width */
+	width:630px; /* Full-width */
 	height:42px;
 	background-color:gray; /* Dark-grey background */
 	overflow: auto; /* Overflow due to float */
     float:right;
-	position:relative;
+	z-index: 2;
 
 }
 
@@ -764,17 +735,60 @@ dnav1 a {
 }
 
 #user_icon {
-	
-	float:right;
+	display: block;
+	position: absolute;
 	text-align: center;
 	width:200px;
 	height: 42px;
 	transition: all 0.3s ease;
+    z-index: 3;
+	right: 0px;
+	
 
 }
 
-#user_icon:hover {
-	background-color: darkcyan;
+
+#user_icon1{
+
+    position: relative;
+	width:200px;
+	height: 42px;
+}
+
+
+#user_icon2{
+
+	display: none;
+    position: relative;
+	width:200px;
+	height: 42px;
+    background-color: black;
+    border-radius: 2px 2px 2px 2px;
+	color: white;
+	font-family: Segoe UI,Arial,sans-serif;
+    cursor: hand;
+	text-align: center;
+	font-size: 20px;
+
+}
+
+
+#user_icon:hover #user_icon2{
+	
+	display: block;
+	
+}
+
+#user_icon:hover #user_icon1{
+
+	background-color:  teal;
+
+}
+
+#user_icon2:hover{
+
+     background-color:  red;
+
 }
 
 .user_icon_image {
@@ -799,3 +813,4 @@ dnav1 a {
 	white-space: nowrap;
 	top:6px;
 }
+
