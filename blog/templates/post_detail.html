@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="post_title w3-container">{{ posts.title }}</h1>
+
+{% if posts.postimage  %}
+<div class="w3-container"><img src="{{posts.postimage.url}}" class="w3-round post_detail_img"></div>
+<br>  
+{% endif %}
+
+<div class="w3-container">
+
+<p class="postcontent">{{posts.text|safe|linebreaksbr}}</p>
+
+{% if user.is_authenticated %}
+  <a class="w3-button w3-blue w3-round-small" href="{% url 'blog:post_edit' pk=posts.pk %}">Edit</a>
+  <a class="w3-button w3-grey w3-round-small" href="{% url 'blog:post_remove' pk=posts.pk %}">Remove</a>  
+{% endif %}
+
+{% if posts.published_date %}
+<br><br>
+    <div class="date postdate">
+        {{ posts.published_date }}
+    </div>
+{% else %}
+<br><br>
+    <a class="w3-button w3-teal w3-round-xlarge" href="{% url 'blog:post_publish' pk=posts.pk %}">Publish</a>
+{% endif %}
+
+</div>
+
+<hr>
+
+<a class="w3-button w3-text-orange w3-round-small" href="{% url 'blog:add_comment_to_post' pk=posts.pk %}">Add Comment</a>
+
+<div class="w3-container"></div>
+{% for comment in posts.comments.all %}
+ <br>
+                    {{comment.created_date}}
+    {% if user.is_authenticated or comment.approved_comments  %}
+     
+        {% if not comment.approved_comments %}
+            <a class="w3-button w3-blue w3-round-small" href="{% url 'blog:comment_approve' pk=comment.pk %}">Comment Approve</a>
+            <a class="w3-button w3-grey w3-round-small" href="{% url 'blog:comment_remove' pk=comment.pk %}">Comment Remove</a>    
+        {% endif %}
+
+     <p>{{comment.text|safe|linebreaks}}</p>
+     <p>Posted By: {{comment.author}} </p>
+
+    
+    {% endif %}
+ 
+ {% empty %}
+       
+    <p> No Comments </p>
+
+{% endfor %}
+
+
+{% endblock %}

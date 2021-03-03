@@ -26,6 +26,7 @@ urlpatterns = [
     url(r"^admin/", admin.site.urls),
     path('accounts/', include ('accounts.urls')),
     path('/', include ('homepage.urls')),
+    path('blog/', include ('blog.urls')),
 
 ]
 

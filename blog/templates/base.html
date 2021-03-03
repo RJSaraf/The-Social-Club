@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="{% static 'css/w3.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+
+<body>
+
+<nav class='w3-bar'>
+
+        <div class="w3-container w3-half w3-black m4 w3-left">
+          <a href="{% url 'blog:post_list' %}" class="w3-bar-item w3-button">Home</a>
+          <a href="{% url 'homepage:home' %}" class="w3-bar-item w3-button">QuantumLab</a>
+          {% if not user.is_authenticated %}
+          <a href="{% url 'homepage:home' %}" class="w3-bar-item w3-button">Login</a>
+          {% endif %}
+          <div class="w3-dropdown-hover">
+            <button class="w3-button">Dropdown</button>
+            <div class="w3-dropdown-content w3-bar-block w3-card-4">
+              <a href="#" class="w3-bar-item w3-button">Link 1</a>
+              <a href="#" class="w3-bar-item w3-button">Link 2</a>
+              <a href="#" class="w3-bar-item w3-button">Link 3</a>
+            </div>
+          </div>
+        </div>
+      
+        {% if user.is_authenticated %}
+        <div class="w3-container w3-half w3-blue m4 w3-right">
+            <a href="{% url 'blog:post_new' %}" class="w3-bar-item w3-button">New Post</a>
+            <a href="{% url 'blog:post_draft_list' %}" class="w3-bar-item w3-button">Drafts</a>
+            <a href="#" class="w3-bar-item w3-button">Hello! {{user.username}}</a>
+            <a href="{% url 'accounts:logout'%}" class="w3-bar-item w3-button">Logout</a>
+          </div>
+        {% endif %}
+</nav>
+
+
+<div class="w3-container">
+    <div class="w3-row">
+        <div class="w3-col m8">
+            <div class="blog_posts">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>        
+    </div>
+</div>
+
+
+</body>
+</html>

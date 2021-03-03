@@ -1,10 +1,12 @@
-from django.shortcuts import render,redirect,HttpResponse
-from django.contrib.auth.models import User, auth
-from django.contrib import messages
-from .models import UserInfo
-from django.contrib.auth.decorators import login_required
-from django.views.generic import View, TemplateView, ListView, DetailView
 from . import models
+from django.contrib.auth.models import User, auth
+from .models import UserInfo
+
+from django.views.generic import View, TemplateView, ListView, DetailView
+from django.shortcuts import render,redirect,HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+
 
 # Create your views here.
 # accounts
