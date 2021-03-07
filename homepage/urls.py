@@ -9,6 +9,5 @@ app_name = 'homepage'
 
 urlpatterns = [
 url(r"^/$", views.HomeView.as_view(), name='home'),
-url(r"^edit/$", views.EditView.as_view(), name='edit'),
 
 ]

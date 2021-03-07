@@ -5,6 +5,7 @@
    
        <link rel="stylesheet" type="text/css" href="{% static 'css/user_profile.css' %}">
        <link rel="stylesheet" type="text/css" href="{% static 'css/w3.css' %}">
+       <link rel="stylesheet" type="text/css"  href="{% static 'css/style1.css'}">
 
  <div class="section_A ">
 
@@ -12,7 +13,7 @@
 
   <div class="section1" >
 
-    <img src="{{request.user.profileimages.propic.url}}" class="w3-hover-grayscale" id="profile_image">
+    <img src="{% if request.user.userinfo.propic %}{{detail.propic.url}}{% endif %}" class="w3-hover-grayscale" id="profile_image">
 
 
 
@@ -68,7 +69,7 @@
            <div class="shift_info_section"><img class="sisimg" src="{% static 'png/user.png' %}"><a class="pca w3-padding-16 tablinks" onclick="openCity(event, 'Personal')">Personal Info</a></div>
            <div class="shift_info_section"><img class="sisimg" src="{% static 'png/identification.png' %}"><a class="pca w3-padding-16 tablinks" onclick="openCity(event, 'Contact')">Contact</a></div>
            <div class="shift_info_section"><img class="sisimg" src="{% static 'png/sketchbook.png' %}"><a class="pca w3-padding-16 tablinks" onclick="openCity(event, 'Activity')">Activity</a></div>
-           
+           <div class="shift_info_section"><img class="sisimg" src="{% static 'png/pencil.png' %}"><a class="pca w3-padding-16 tablinks tdn" href="{% url 'accounts:edit_user_info' pk=user.id %}">Edit</a></div>           
        </div>
        <br>
        <div class="user_detail w3-container tabcontent w3-animate-right" id="Personal">

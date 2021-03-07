@@ -9,13 +9,19 @@
     display: block;
     position: relative;
     height: 400px;
-    width: 800px;
+    width: auto;
 
 }
 
-.flex-container {
-  
-    display: flex;
-    
-    flex-direction: column;
-  }
+.postcontent{
+    height:600px;
+    width: 100%;
+
+}
+
+.textinputclass{
+
+    height:50px;
+    width:100%;
+
+}

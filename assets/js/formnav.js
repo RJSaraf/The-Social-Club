@@ -14,8 +14,6 @@ function validateForm() {
   }
 }
 </script>
-</head>
-<body>
 
 ------------------------------------------navbar scroll
 var prevScrollpos = window.pageYOffset;
@@ -39,3 +37,26 @@ function scrollFunction() {
 };
 innerHTML
 getElementsByClassName
+
+
+
+    <!--    nav click content-- >
+                    function mDown_feedback() {
+
+        document.getElementById('fd').classList.toggle('show');
+
+                    };
+
+                function myFunction_feedback() {
+        document.getElementById("mystyle").classList.toggle("mystyle");
+                };
+
+                function mDown_contact() {
+
+        document.getElementById('fd2').classList.toggle('show');
+
+                };
+
+                function myFunction_contact() {
+        document.getElementById("mystyle2").classList.toggle("mystyle2");
+                };

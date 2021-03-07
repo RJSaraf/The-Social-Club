@@ -1,0 +1,286 @@
+.nav {
+	display: block;
+	position: absolute;
+	height: 120px;
+	width: 1340px;
+	border-color: gray;
+	border-radius: 2px 2px 2px 2px;
+	box-shadow: 0 3px 6px 0 gray;
+}
+
+
+.section_A {
+
+	display:block;
+	position:relative;
+	height: 1000px;
+	width: 1340px;
+	z-index: 0;
+	
+}
+
+.section_back{
+
+	position: absolute;
+    height: 370px;
+	width: 1340;
+	z-index: 0;
+	top: 0px;
+	background-color:#00758F;
+}
+
+
+
+/* section1  ---------------------------------------------------------------------*/
+
+
+.section1 {
+	position: static;
+	float: left;
+	height: 1000px;
+	width: 335px;
+	z-index: 1;
+}
+
+#profile_image {
+	position: relative;
+	right: 0px;
+	height: 290px;
+	width: 280px;
+	margin-left: 55px;
+	margin-top: 140px;
+	border-radius: 6px 6px 6px 6px;
+	box-shadow: 0 3px 6px 0 black;
+
+}
+
+
+/* section2  -----------------------------------------------------------------------------*/
+
+
+.section2 {
+	position: static;
+	float: right;
+	height: 1000px;
+	width: 1005px;
+	z-index: 1;
+
+}
+
+
+/* section2_1  ----------------------------------------------------------------*/
+
+.section2_1 {
+	position: relative;
+	float: left;
+	height: 350px;
+	width: 1005px;
+}
+
+/* user name pro loca star  ---------------------------------*/
+
+
+.user_npl {
+
+	position: relative;
+	height: 180px;
+	width: 400px;
+	margin-left:100px;
+	margin-top:80px;
+}
+
+
+.username {
+	position: relative;
+	float: left;
+	height: 65px;
+	width: 300px;
+	font-size: 40px;
+	font-family: cursive;
+	color:white;
+}
+
+.userlocation {
+	position: relative;
+	float: right;
+	height: 65px;
+	width: 100px;
+	font-size: 10px;
+	font-weight:bold;
+	font-family: cursive;
+	color: white;
+}
+
+.userprofession {
+	position: relative;
+	height: 35px;
+	width: 300px;
+	float: left;
+	left:0px;
+	font-size: 15px;
+	font-weight: bold;
+	font-family: cursive;
+	margin-top: 8px;
+}
+
+
+.starrating {
+
+	display:inline-block;
+	position: relative;
+	height: 80px;
+	width: 300px;
+	float: left;
+}
+
+.stars {
+	position: relative;
+	height: 40px;
+	width: 150px;
+	float: right;
+	margin-right:90px;
+	margin-top:30px;
+}
+
+.starspan {
+
+	float:left;
+	font-size:30px;
+	font-weight:bold;
+	margin-top:20px;
+}
+.starimg {
+	height: 20px;
+	width: 20px;
+}
+
+
+/*  ----------------------------------*/
+
+.sm_con_re {
+
+	position: relative;
+	height: 40px;
+	width: 696px;
+	float: left;
+	margin-left:68px;
+	margin-top:30px;
+}
+
+.sm_con_re_span {
+
+	position: relative;
+	height: 40px;
+	width: 230px;
+	float: left;
+	font-size:30px;
+	font-family:'Modern No. 20';
+	text-align:center;
+	color: white;
+}
+
+
+/* section2_2  ----------------------------------------------------------------*/
+
+
+
+.section2_2 {
+	position: relative;
+	float: left;
+	height: 800px;
+	width: 1005px;
+	z-index: 0;
+}
+
+.shift_info {
+
+	position: relative;
+	height: 40px;
+	width: 800px;
+	margin-left:90px;
+	margin-top: 40px;
+	border-bottom: 2px groove gray;
+}
+
+.shift_info_section {
+	display:inline-block;
+	position: relative;
+	height: 40px;
+	width: auto;
+	margin-right:20px;
+}
+
+.sisimg{
+
+    height:15px;
+    width:15px;
+    margin-right: 5px;
+}
+
+.user_detail {
+	position: absolute;
+	height: 600px;
+	width: 700px;
+	margin-left:85px;
+	z-index:1;
+
+}
+
+
+.user_detail_2 {
+	
+	position: absolute;
+	height: 600px;
+	width: 700px;
+	margin-left: 85px;
+	z-index: 2;
+	
+}
+
+.user_detail_3 {
+	
+	position: absolute;
+	height: 400px;
+	width: 700px;
+	margin-left: 85px;
+	z-index: 3;
+}
+
+.tabcontent {
+	display: none;
+	
+  }
+
+.tabcontent {
+	animation: fadeEffect 1s; /* Fading effect takes 1 second */
+  }
+  
+/* Go from zero to full opacity */
+@keyframes fadeEffect {
+	from {opacity: 0;}
+	to {opacity: 1;}
+  }
+.pca.active	{
+
+	border-bottom: 2px groove#2196F3;
+}
+
+
+/* frames  ---------------------------------------------------------------------*/
+.tcenter {
+	text-align: center;
+}
+
+.smallimg{
+
+	height:10px;
+	width:10px;
+
+}
+
+.mystyle{
+
+	display:block;
+
+}
+

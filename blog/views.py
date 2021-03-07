@@ -37,7 +37,7 @@ class CreatePostView(LoginRequiredMixin,CreateView):
     
     model = models.Post
     form_class = PostForm
-    template_name = 'post_form.html'
+    template_name = 'post_form.html' 
 
 
 class PostUpdateView(LoginRequiredMixin,UpdateView):

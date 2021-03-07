@@ -1,27 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="w3-container flex-container">
+
 {% for post in posts %}
 
-<a href="{% url 'blog:post_detail' pk=post.pk %}">
 <div class="w3-row-padding w3-margin-top">
-<div class="w3-third">
+  <a href="{% url 'blog:post_detail' pk=post.pk %}">
+<div class="w3-half">
     <div class="w3-card">
     {% if post.postimage %} <img src="{{post.postimage.url}}" style="width:100%"> {% endif %}     
       <div class="w3-container">
-        <h4>{{ post.title }}</h4>
+        <h1>{{ post.title }}</h1>
         <p>Published on: {{post.published_date|date:"D M Y"}}</p>
+        <p>{{post.text|truncatechars:200}}</p> 
       Comments: {{ post.approve_comments.count }}
       </div>
     </div>
-  </div>
-</div></a>
+  </div></a>
+</div>
 
 <br>
 
 {% endfor %}
 
-</div>
+
 
 {% endblock %}

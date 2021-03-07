@@ -55,16 +55,31 @@
             <a href="#" class="user_icon_bar_a"><img src="{% static 'png/039-dropbox.png' %}" class="iconimg"></a>
             <a href="#" class="user_icon_bar_a"><img src="{% static 'png/021-chat.png' %}" class="iconimg"></a>
             <a href="#" class="user_icon_bar_a"><img src="{% static 'png/048-notification.png' %}" class="iconimg"></a>
-            <a href="{% url 'homepage:edit' %}" class="user_icon_bar_a"><img src="{% static 'png/035-user.png' %}" class="iconimg"></a>
+            
+            <a 
+            {% if request.user.userinfo %}
+            href="{% url 'accounts:details' user.id %}" 
+            {% else %}
+            href="{% url 'accounts:create_user_info' pk=user.id %}"
+            {% endif %}
+            class="user_icon_bar_a"><img src="{% static 'png/035-user.png' %}" class="iconimg"></a>
 
             <div id="user_icon">
                 
                 <div id="user_icon1">
-                 <span id="user_name">Hello!, {{user.first_name}}</span>
-                 <a href="{% url 'accounts:details' user.id %}"><img src="{{request.user.profileimages.propic.url}}" class="user_icon_image"></a>
+                 <span id="user_name">Hello, {{user.first_name}}</span>
+                 <a 
+                 {% if request.user.userinfo %}
+                 href="{% url 'accounts:details' user.id %}"  
+                 {% else %}
+                 href="{% url 'accounts:create_user_info' pk=user.id %}"
+                 {% endif %}>
+                 
+                 <img  src="{% if request.user.userinfo.propic %}{{request.user.userinfo.propic.url}}{% endif %}"  class="user_icon_image"></a>
+                
                 </div> 
 
-               <a href="{% url 'accounts:logout'%}"><div id="user_icon2">LOGOUT</div></a>
+               <a style="text-decoration: none;" href="{% url 'accounts:logout'%}"><div id="user_icon2">LOGOUT</div></a>
 
             </div>
 
@@ -86,7 +101,6 @@
         <br>
         <br>
         <br>
-        <div id="d1"></div>
        
         {% if not user.is_authenticated %} 
 
@@ -167,9 +181,6 @@
 
 
     <!--navigation bar content--->
-
-    
-
    
     <!---------------///////////////////////////////-------------------------------------------------------------------------------------------->
 

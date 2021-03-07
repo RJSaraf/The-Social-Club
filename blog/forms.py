@@ -1,5 +1,6 @@
 from django import forms
 from blog.models import Post, Comment
+from django.contrib.auth.models import User
 
 #blog
 
@@ -13,7 +14,7 @@ class PostForm(forms.ModelForm):
             'title':forms.TextInput(attrs={'class':'textinputclass'}),
             'text':forms.Textarea(attrs={'class':'postcontent'}),            
         }
-
+        
 
 class CommentForm(forms.ModelForm):
 

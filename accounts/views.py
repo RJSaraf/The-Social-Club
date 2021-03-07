@@ -1,11 +1,16 @@
 from . import models
 from django.contrib.auth.models import User, auth
-from .models import UserInfo
+from accounts.models import UserInfo
+from accounts.forms import UserForm
 
-from django.views.generic import View, TemplateView, ListView, DetailView
-from django.shortcuts import render,redirect,HttpResponse
+from django.views.generic import View, TemplateView, ListView, DetailView,CreateView, UpdateView, DeleteView
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.utils import timezone
+from django.urls import reverse_lazy
+from django.urls import reverse
 
 
 # Create your views here.
@@ -26,6 +31,25 @@ class UserView(DetailView):
    
 class FeedbackView(TemplateView):
    template_name = "feedback.html"
+
+
+class UserInfoCreateView(CreateView):
+     login_url = '/'
+     redirect_field_name = 'user_profile.html'
+     
+     model = models.UserInfo
+     form_class = UserForm
+     template_name = "EditUserInfo.html"
+
+
+
+class UserInfoUpdateView(UpdateView):
+     login_url = '/'
+     redirect_field_name = 'user_profile.html'
+     
+     model = models.UserInfo
+     form_class = UserForm
+     template_name = "EditUserInfo.html"
 
 
 def savedata(request):

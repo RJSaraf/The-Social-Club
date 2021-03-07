@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1 class="post_title w3-container">{{ posts.title }}</h1>
+<div class='w3-container'>
+<h1 class="post_title">{{ posts.title }}</h1>
 
 {% if posts.postimage  %}
-<div class="w3-container"><img src="{{posts.postimage.url}}" class="w3-round post_detail_img"></div>
+<img src="{{posts.postimage.url}}" class="w3-round post_detail_img">
 <br>  
 {% endif %}
 
@@ -49,7 +50,7 @@
 
     
     {% endif %}
- 
+</div>
  {% empty %}
        
     <p> No Comments </p>

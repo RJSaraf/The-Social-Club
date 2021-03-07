@@ -1,0 +1,27 @@
+
+.centerstage{
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.post_detail_img{
+    display: block;
+    position: relative;
+    height: 400px;
+    width: auto;
+
+}
+
+.postcontent{
+    height:600px;
+    width: 100%;
+
+}
+
+.textinputclass{
+
+    height:50px;
+    width:100%;
+
+}

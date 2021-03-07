@@ -1,7 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-<title>W3.CSS</title>
+<title>Blog</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="{% static 'css/w3.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
@@ -14,7 +14,7 @@
 
 <nav class='w3-bar'>
 
-        <div class="w3-container w3-half w3-black m4 w3-left">
+        <div class="w3-container w3-half w3-black s6 w3-left">
           <a href="{% url 'blog:post_list' %}" class="w3-bar-item w3-button">Home</a>
           <a href="{% url 'homepage:home' %}" class="w3-bar-item w3-button">QuantumLab</a>
           {% if not user.is_authenticated %}
@@ -31,7 +31,7 @@
         </div>
       
         {% if user.is_authenticated %}
-        <div class="w3-container w3-half w3-blue m4 w3-right">
+        <div class="w3-container w3-half w3-blue s6 w3-right">
             <a href="{% url 'blog:post_new' %}" class="w3-bar-item w3-button">New Post</a>
             <a href="{% url 'blog:post_draft_list' %}" class="w3-bar-item w3-button">Drafts</a>
             <a href="#" class="w3-bar-item w3-button">Hello! {{user.username}}</a>

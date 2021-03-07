@@ -5,12 +5,33 @@
    
        <link rel="stylesheet" type="text/css" href="{% static 'css/w3.css' %}">
 
+<br>
+<br>
+<div class="w3-container containerimage">       
+       
+       <h1>Profile:</h1>
+       <form class='pos-form' method='POST' enctype="multipart/form-data">
+       {% csrf_token %}
+
+              {{form.as_p}}
+
+              <button type="submit" class="w3-button w3-small w3-blue-grey">Save</button>
+
+       </form>
 
 
+</div>
 
+<style>
 
+.containerimage{
+       background-image: url( '{% static "images/Cyan Geometry.png" %}' );
+       background-repeat: no-repeat;
+       background-size: cover;
+       background-attachment: fixed;
+  }
 
-
+</style>
 
 
        {% endblock %}
