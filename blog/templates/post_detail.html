@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
+{% load static %}
 
 <div class='w3-container'>
+
+{% if posts.published_date %}
+    <div class="commentdate w3-right-align"> {{ posts.published_date }} <br> created by : <b>{{posts.author}}</b> </div>
+{% endif %}
+
+
 <h1 class="post_title">{{ posts.title }}</h1>
 
 {% if posts.postimage  %}
@@ -14,48 +21,61 @@
 <p class="postcontent">{{posts.text|safe|linebreaksbr}}</p>
 
 {% if user.is_authenticated %}
-  <a class="w3-button w3-blue w3-round-small" href="{% url 'blog:post_edit' pk=posts.pk %}">Edit</a>
-  <a class="w3-button w3-grey w3-round-small" href="{% url 'blog:post_remove' pk=posts.pk %}">Remove</a>  
+    {% if posts.author == request.user %}
+    
+        <a class="w3-button w3-blue w3-round-small" href="{% url 'blog:post_edit' pk=posts.pk %}">Edit</a>
+        <a class="w3-button w3-grey w3-round-small" href="{% url 'blog:post_remove' pk=posts.pk %}">Remove</a>  
+    
+    {% endif %}  
 {% endif %}
 
-{% if posts.published_date %}
-<br><br>
-    <div class="date postdate">
-        {{ posts.published_date }}
-    </div>
-{% else %}
+{% if not posts.published_date %}
 <br><br>
     <a class="w3-button w3-teal w3-round-xlarge" href="{% url 'blog:post_publish' pk=posts.pk %}">Publish</a>
 {% endif %}
 
 </div>
 
-<hr>
+<hr class="">
 
 <a class="w3-button w3-text-orange w3-round-small" href="{% url 'blog:add_comment_to_post' pk=posts.pk %}">Add Comment</a>
+<br><br>
+<div class="w3-container">
+    {% for comment in posts.comments.all %}
+                  
+        {% if comment.approved_comments or posts.author == request.user or request.user == comment.author %}
+           
+            <div {% if not comment.approved_comments %} class="not_approved_comment" {% endif %} >
+            
+            <p class="w3-text-green w3-cursive">{{comment.text|safe|linebreaks}}</p>
+            
+            <div class="w3-text-green w3-cursive commentdate">{{comment.created_date}}<br>Posted By: <b>{{comment.author}}</b> </div>
+            </div>
+            {% if request.user == comment.author %}
+            <br>
+            <a class="w3-button w3-grey w3-round-small" href="{% url 'blog:comment_edit' pk=comment.pk %}"><img class="approveimg" src="{% static 'png/pencil.png' %}"></a>
+            <a class="w3-button w3-grey w3-round-small" href="{% url 'blog:comment_remove' pk=comment.pk %}"><img class="approveimg" src="{% static 'png/trash-bin.png' %}"></a>
+          
+            {% endif %}
 
-<div class="w3-container"></div>
-{% for comment in posts.comments.all %}
- <br>
-                    {{comment.created_date}}
-    {% if user.is_authenticated or comment.approved_comments  %}
-     
-        {% if not comment.approved_comments %}
-            <a class="w3-button w3-blue w3-round-small" href="{% url 'blog:comment_approve' pk=comment.pk %}">Comment Approve</a>
-            <a class="w3-button w3-grey w3-round-small" href="{% url 'blog:comment_remove' pk=comment.pk %}">Comment Remove</a>    
+                {% if posts.author == request.user %}       
+                    {% if not comment.approved_comments %}
+                    <br>
+                        <a class="w3-button w3-blue w3-round-small" href="{% url 'blog:comment_approve' pk=comment.pk %}"><img class="approveimg" src="{% static 'png/check.png' %}"></a>
+                        <a class="w3-button w3-grey w3-round-small" href="{% url 'blog:comment_remove' pk=comment.pk %}"><img class="approveimg" src="{% static 'png/trash-bin.png' %}"></a>    
+                    {% endif %}
+                {% endif %}
+
+            <hr>
+        
+
         {% endif %}
-
-     <p>{{comment.text|safe|linebreaks}}</p>
-     <p>Posted By: {{comment.author}} </p>
-
-    
-    {% endif %}
-</div>
+ 
  {% empty %}
-       
+    
     <p> No Comments </p>
-
-{% endfor %}
-
+ 
+ {% endfor %}
+</div>
 
 {% endblock %}

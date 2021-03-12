@@ -37,7 +37,13 @@ class CreatePostView(LoginRequiredMixin,CreateView):
     
     model = models.Post
     form_class = PostForm
-    template_name = 'post_form.html' 
+    template_name = 'post_form.html'
+    
+    def form_valid(self, form):
+        article = form.save(commit=False)
+        article.author = self.request.user
+        #article.save()  # This is redundant, see comments.
+        return super(CreatePostView, self).form_valid(form)
 
 
 class PostUpdateView(LoginRequiredMixin,UpdateView):
@@ -81,7 +87,11 @@ def add_comment_to_post(request,pk):
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
+            comment.author = request.user
             comment.post = post
+            if comment.post.author == request.user:
+             comment.approve()
+            
             comment.save()
             return redirect('blog:post_detail',pk=post.pk)
     else:
@@ -102,3 +112,11 @@ def comment_remove(request,pk):
     post_pk = comment.post.pk
     comment.delete()
     return redirect('blog:post_detail',pk=post_pk)
+
+class CommentUpdateView(LoginRequiredMixin,UpdateView):
+    login_url = '/'
+    redirect_field_name = 'post_detail.html'
+
+    model = Comment
+    form_class = CommentForm
+    template_name = "comment_form.html"

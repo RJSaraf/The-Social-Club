@@ -42,6 +42,13 @@ class UserInfoCreateView(CreateView):
      template_name = "EditUserInfo.html"
 
 
+     def form_valid(self, form):
+        article = form.save(commit=False)
+        article.user = self.request.user
+        #article.save()  # This is redundant, see comments.
+        return super(UserInfoCreateView, self).form_valid(form)
+
+
 
 class UserInfoUpdateView(UpdateView):
      login_url = '/'

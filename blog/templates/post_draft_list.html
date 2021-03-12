@@ -1,26 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
 
- {% for post in posts %}
-   
- 
-  <div class="w3-row-padding w3-margin-top">
-    <a href="{% url 'blog:post_detail' pk=post.pk %}">
-    <div class="w3-third">
-        <div class="w3-card">
-        {% if post.postimage %} <img src="{{post.postimage.url}}" style="width:100%"> {% endif %}     
-          <div class="w3-container">
-  
-            <p class="date">created: {{ post.created_date|date:'D M Y'}}</p>               
-            <h1>{{post.title}}</h1>
-            <p>{{post.text|truncatechars:200}}</p>    
-          
-        </div>
+<div class="row">
+  {% for post in posts %}
+    {% if post.author == user %}
+    <div class="column">
+      <a href="{% url 'blog:post_detail' pk=post.pk %}" style="text-decoration:none;">
+      <div class="card">
+        {% if post.postimage %} <img src="{{post.postimage.url}}" style="width:100%"> {% endif %}
+        <div class="w3-container">
+          <p class="date">created: {{ post.created_date|date:'D M Y'}}</p>               
+          <h1>{{post.title}}</h1>
+          <p>{{post.text|truncatechars:200}}</p> 
         </div>
       </div></a>
     </div>
-   
- {% endfor %}
+    {% endif %}
+  {% endfor %}
+</div>
 
 {% endblock %}
 

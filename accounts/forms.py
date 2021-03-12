@@ -8,7 +8,7 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = UserInfo
-        fields = ('user','phone_number','gender','birth_date','country','city','state','address','profession','age','propic')
+        fields = ('phone_number','gender','birth_date','country','city','state','address','profession','age','propic')
 
         widgets = {
 
