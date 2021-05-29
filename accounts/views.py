@@ -1,7 +1,10 @@
 from . import models
-from django.contrib.auth.models import User, auth
+#from django.contrib.auth.models import User, auth
+
+from django.contrib import auth
 from accounts.models import UserInfo
 from accounts.forms import UserForm
+from . import forms
 
 from django.views.generic import View, TemplateView, ListView, DetailView,CreateView, UpdateView, DeleteView
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
@@ -59,50 +62,8 @@ class UserInfoUpdateView(UpdateView):
      template_name = "EditUserInfo.html"
 
 
-def savedata(request):
-
-        first_name = request.POST['firstname']
-        last_name  = request.POST['lastname']
-        username   = request.POST['username']
-        psw        = request.POST['psw']
-        psw_repeat = request.POST['psw_repeat']
-        email      = request.POST['email']
-
-
-        if psw != psw_repeat:
-           messages.info(request,'Password Not Matching')
-           return redirect('register')
-
-        if User.objects.filter(username=username).exists():
-           messages.info(request,'Username Taken')
-           return redirect('register')
-
-        elif User.objects.filter(email=email).exists():
-             messages.info(request,'Email Exists')
-             return redirect('register')
-
-        else:
-              user = User.objects.create_user(username=username, password=psw, email=email,first_name=first_name, last_name=last_name)
-              user.save()
-              print('user created')
-              return redirect('/')    
-
-
-
-
-def login(request):   
-    
-     username   = request.POST['username']
-     password   = request.POST['password']
-
-
-     user = auth.authenticate(username=username,password=password)
-
-
-     if user is not None:
-            auth.login(request,user)
-            return redirect('/')
-            
-     else:
-            messages.info(request,'Invalid Credential')
-            return redirect('/')
+class SignUp(CreateView):
+   
+   form_class = forms.UserCreateForm
+   success_url = reverse_lazy('accounts:login')
+   template_name = 'signup.html'

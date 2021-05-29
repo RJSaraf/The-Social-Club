@@ -9,20 +9,20 @@
 
  <div class="section_A ">
 
-<div class= "section_back" > </div>
+    <div class= "section_back" >
 
-  <div class="section1" >
+    <div class="section1" >
 
-    <img src="{% if request.user.userinfo.propic %}{{detail.propic.url}}{% endif %}" class="w3-hover-grayscale" id="profile_image">
-
-
+        <img src="{% if request.user.userinfo.propic %}{{detail.propic.url}}{% endif %}" class="w3-hover-grayscale" id="profile_image">
 
 
 
 
 
 
-  </div>
+
+
+  
 
 
   <div class="section2">
@@ -66,9 +66,9 @@
 
        <div class="shift_info">
            
-           <div class="shift_info_section"><img class="sisimg" src="{% static 'png/user.png' %}"><a class="pca w3-padding-16 tablinks" onclick="openCity(event, 'Personal')">Personal Info</a></div>
-           <div class="shift_info_section"><img class="sisimg" src="{% static 'png/identification.png' %}"><a class="pca w3-padding-16 tablinks" onclick="openCity(event, 'Contact')">Contact</a></div>
-           <div class="shift_info_section"><img class="sisimg" src="{% static 'png/sketchbook.png' %}"><a class="pca w3-padding-16 tablinks" onclick="openCity(event, 'Activity')">Activity</a></div>
+           <div class="shift_info_section"><img class="sisimg" src="{% static 'png/user.png' %}"><a class="pca w3-padding-16 tablinks" onclick="swipe(event, 'Personal')">Personal Info</a></div>
+           <div class="shift_info_section"><img class="sisimg" src="{% static 'png/identification.png' %}"><a class="pca w3-padding-16 tablinks" onclick="swipe(event, 'Contact')">Contact</a></div>
+           <div class="shift_info_section"><img class="sisimg" src="{% static 'png/sketchbook.png' %}"><a class="pca w3-padding-16 tablinks" onclick="swipe(event, 'Activity')">Activity</a></div>
            <div class="shift_info_section"><img class="sisimg" src="{% static 'png/pencil.png' %}"><a class="pca w3-padding-16 tablinks tdn" href="{% url 'accounts:edit_user_info' pk=user.id %}">Edit</a></div>           
        </div>
        <br>
@@ -138,7 +138,7 @@
 
        <script>
 
-           function openCity(evt, cityName) {
+           function swipe(evt, swipe_id) {
             var i, tabcontent, tablinks;
              tabcontent = document.getElementsByClassName("tabcontent");
             for (i = 0; i < tabcontent.length; i++) {
@@ -148,7 +148,7 @@
             for (i = 0; i < tablinks.length; i++) {
              tablinks[i].className = tablinks[i].className.replace(" active", "");
              }
-            document.getElementById(cityName).style.display = "block";
+            document.getElementById(swipe_id).style.display = "block";
             evt.currentTarget.className += " active";
            
            }  
@@ -162,6 +162,6 @@
 
    </div>
 
- </div>
+</div>
 
 {% endblock %}

@@ -25,15 +25,24 @@ SECRET_KEY = '#e)$zd-arvy*y%6iys81bdx=78cw)gy5i9s#@=7$piq4qtzu8t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'TheSocialClub',
     'blog',
     'homepage',
     'accounts',
+     #####
+    'channels',
+    'braces',
+    'dajaxice',
+    'dajax',
+    'rest_framework',
+    "bootstrap3",
+     #####
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -60,7 +69,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
              os.path.join(BASE_DIR,"templates"),
-             os.path.join(BASE_DIR,'blog/templates')
+             os.path.join(BASE_DIR,'blog/templates'),
+             os.path.join(BASE_DIR,'TheSocialClub/templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -75,6 +85,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Quantum_django.wsgi.application'
+ASGI_APPLICATION = "Quantum_django.asgi.application"
+
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('localhost', 6379)],
+        },
+    },
+}
 
 
 # Database
@@ -143,7 +164,8 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join( BASE_DIR ,'static'),
-    os.path.join(BASE_DIR,'blog/static')
+    os.path.join(BASE_DIR,'blog/static'),
+    os.path.join(BASE_DIR,'TheSocialClub/static'),
   ]
 
 STATIC_ROOT = os.path.join( BASE_DIR , 'assets')
@@ -151,3 +173,19 @@ STATIC_ROOT = os.path.join( BASE_DIR , 'assets')
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+LOGIN_REDIRECT_URL = 'homepage:home'
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}

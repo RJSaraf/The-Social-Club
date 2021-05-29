@@ -49,7 +49,7 @@ class CreatePostView(LoginRequiredMixin,CreateView):
 class PostUpdateView(LoginRequiredMixin,UpdateView):
     login_url = '/'
     redirect_field_name = 'post_detail.html'
-    
+        
     model = Post
     form_class = PostForm
     template_name = 'post_form.html'
@@ -120,3 +120,49 @@ class CommentUpdateView(LoginRequiredMixin,UpdateView):
     model = Comment
     form_class = CommentForm
     template_name = "comment_form.html"
+
+@login_required
+def postlike(request,pk):
+    Plike = get_object_or_404(Post,pk=pk)
+    user = request.user
+    if user in Plike.like.all():
+        Plike.like.remove(user)
+        Plike.save()
+    else:
+        Plike.like.add(user)
+        Plike.save()
+    return redirect('blog:post_detail',pk=pk)
+
+#########################################################################################################
+ 
+ 
+from django.contrib.auth.models import User, Group
+from rest_framework import viewsets
+from rest_framework import permissions
+from blog.serializers import UserSerializer, GroupSerializer, PostSerializer
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class GroupViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+    permission_classes = [permissions.IsAuthenticated]    
+
+class PostViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Post.objects.all().order_by('-created_date')
+    serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated] 

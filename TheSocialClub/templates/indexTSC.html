@@ -1,0 +1,87 @@
+{% extends "baseTSC.html" %}
+{% block base %}
+
+<div class="w3-row" style="height: 655px; width: 100%; background: #06151d; position: fixed; z-index:0;">
+                
+    <div class="w3-col overflow-hidden border" style="height: 100%; width: 21.5%; background-color:#185c83;">
+    </div>
+
+    <div class="w3-col overflow-auto border" style="height: 100%; width: 56%; background-color:#2A2F32;">
+        
+        <a onclick="document.getElementById('id01').style.display='block'">
+            <div class="w3-row mt-2 w3-border center bg-light w3-card-4 p-3 w3-round-large">
+                <div class="w3-left m-2"><img src="{% if request.user.userinfo.propic %}{{request.user.userinfo.propic.url}}{% endif %}" style="height:35px;width:35px;" class="w3-circle"></div>
+                <div class="w3-col s6 m-2 p-2 w-75 w3-round-xxlarge bg-secondary">
+                    <span class="text-decoration-none">Whats on your mind {{request.user.first_name.upper}}!</span>      
+                </div>
+            </div>
+        </a>
+
+        <div id="id01" class="w3-modal">
+          <div class="w3-modal-content w3-card-4">
+            <header class="w3-container border-bottom"> 
+              <span onclick="document.getElementById('id01').style.display='none'" 
+              class="w3-button w3-display-topright">&times;</span>
+              <h2>Create Post</h2>
+            </header>
+            <br>
+            <div class="w3-container">
+              <form action="{% url 'TheSocialClub:createpost' username=request.user.username %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" value="Post" class="w3-2021-french-blue w3-round-large" style="width:100%;">Post</button>
+              </form>
+              <br>
+            </div>
+          </div>
+        </div>
+      
+       
+       
+       
+       
+       
+        <div style="padding-left: 15%; padding-right: 15%;">
+            <div class="w3-centered p-3">
+                <div class="row">
+                    <div class="col">
+                        {% for post in posts %}
+                        {% include "posts/_post.html" %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="w3-col overflow-auto border" style="height: 100%; width: 22.5%; background-color:#37c495;">
+        
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col font"><h4> Friend List </h4></div>
+            </div>
+        </div>
+
+        <div class="w3-container">
+            {% for friend in friendlist %}
+                {% for user in friend.friends.all %}
+                    <a href="{% url 'TheSocialClub:friendsingle' slug=user.username pk=user.id %}">
+                    <div class="w3-row w3-round-large w3-text-white w-100 w3-hover-gray pl-2">
+                        <img class="w3-circle w3-left w3-quarter my-2" src="{% if user.userinfo.propic %}{{user.userinfo.propic.url}}{% endif %}" style="height:35px;width:35px;">
+                        <div class="w3-col w-75 p-2">
+                            <div class="p-1">
+                                <div class="">{{ user.username}}</div>
+                            </div>
+                        </div>   
+                    </div>
+                    </a>
+                {% endfor %}
+            {% endfor %}
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock  %}

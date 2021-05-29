@@ -1,0 +1,18 @@
+{% extends "baseTSC.html" %}
+{% block base %}
+{% load static %}
+
+{% block group_base %}
+  
+<div class="container">
+    <div class='row'>
+        {% block pregroup %}{% endblock %}
+        {% block group_content %}{% endblock %}
+        {% block postgroup %}{% endblock %}
+
+    </div>
+</div>
+
+{% endblock group_base %}
+
+{% endblock base %}

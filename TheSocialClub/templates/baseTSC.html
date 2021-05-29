@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Social Club</title>
+
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/w3.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/TheSocialClub.css' %}">
+  
+    <script src="{% static 'js/index.js' %}"></script>
+    <script src="{% static 'js/jQuery.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/ajax.googleapis.js' %}"></script>
+    <script src="{% static 'js/reconnecting-websocket.js' %}"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-grid.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-grid.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-reboot.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-reboot.min.css' %}">
+    
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+</head>
+
+
+<body data-spy="scroll" data-target="#myScrollspy" data-offset="15">
+
+<nav class='w3-bar' style="position: sticky;">
+
+        <div class="w3-black w3-left {% if not user.is_authenticated %}w-100{% else %}w-50{% endif %}">
+          <a href="{% url 'TheSocialClub:home' slug=request.user %}" class="w3-bar-item w3-button text-decoration-none">Home</a>
+          <a href="{% url 'homepage:home' %}" class="w3-bar-item w3-button text-decoration-none">QuantumLab</a>
+          {% if not user.is_authenticated %}
+          <a href="{% url 'accounts:login' %}" class="w3-bar-item w3-button text-decoration-none">Login</a>
+          {% endif %}
+          <a href="{% url 'TheSocialClub:allgroup'%}" class="w3-bar-item w3-button text-decoration-none">Groups</a>
+          <div class="w3-dropdown-hover">
+            <button class="w3-button">Dropdown</button>
+            <div class="w3-dropdown-content w3-bar-block w3-card-4">
+              <a href="#" class="w3-bar-item w3-button">Link 1</a>
+              <a href="#" class="w3-bar-item w3-button">Link 2</a>
+              <a href="#" class="w3-bar-item w3-button">Link 3</a>
+            </div>
+          </div>
+        </div>
+      
+        {% if user.is_authenticated %}
+        <div class="w3-half w3-blue w3-left">
+            <a href="{% url 'TheSocialClub:allgroup' %}" class="w3-bar-item w3-button text-decoration-none">Groups</a>
+            <a href="{% url 'TheSocialClub:creategroup' %}" class="w3-bar-item w3-button text-decoration-none">Create Group</a>
+            <a href="#" class="w3-bar-item w3-text-black text-decoration-none">Hello! {{user.username}}</a>
+            <a href="{% url 'accounts:logout' %}" class="w3-bar-item w3-button text-decoration-none">Logout</a>
+          </div>
+        {% endif %}
+</nav>
+
+
+    {% block base %}
+    {% endblock base %}
+
+</body>
+</html>

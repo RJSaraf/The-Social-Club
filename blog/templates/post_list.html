@@ -1,23 +1,50 @@
 {% extends "base.html" %}
 {% block content %}
+<div style="height: 100%; width: 100%;  background:  #BEC3C9;; position: fixed; z-index:0;">
 
+  <div class="w3-col overflow-hidden" style="height: 690px; width: 20%; background:#2A2F32;">
 
-<div class="row">
-  {% for post in posts %}
-  <div class="column">
-    <a href="{% url 'blog:post_detail' pk=post.pk %}" style="text-decoration:none;">
-    <div class="card">
-      {% if post.postimage %} <img src="{{post.postimage.url}}" style="width:100%"> {% endif %}
-      <div class="w3-container">
-        <h2>{{ post.title }}</h2>
-        <p>Published on: {{post.published_date|date:"D M Y"}}</p>
-        <p>{{post.text|truncatechars:200}}</p>
-        Comments: {{ post.approve_comments.count }}
-      </div>
-    </div></a>
+    yo
+  </div>  
+
+  <div class="w3-col w3-border" style="height: 690px; width: 60%; overflow-y:auto; overflow-x:hidden;">
+  <br><br>
+    <div class="row">
+      {% for post in posts %}
+        <div class="col-8 overflow-hidden w3-card w3-round-large w3-text-black centerstage mt-3 mb-3 bg-white">
+            
+            <div class="w3-row w3-text-white w-100 mt-2">
+              <img class="w3-circle w3-left w3-quarter m-2" src="{% if post.author.userinfo.propic %}{{post.author.userinfo.propic.url}}{% endif %}" style="height:35px;width:35px;">
+                <div class="w3-col w-75 w3-border-bottom p-1">
+                    <div class="p-1">
+                        <div class="w3-text-black">{{post.author}}</div>
+                        <div class="small w3-text-black">Published on: {{post.published_date|date:"D M Y"}}</div>
+                    </div>
+                </div>   
+            </div>
+
+            <div class="w3-padding-16">
+              {% if post.postimage %} <img src="{{post.postimage.url}}" style="width:100%"> {% endif %}
+              <h2>{{ post.title }}</h2>
+              <p>{{ post.text|truncatechars:150 }}</p>
+              Comments: {{ post.approve_comments.count }}
+              <p>likes : {{post.like.count}}</p>
+              <a href="{% url 'blog:post_detail' pk=post.pk %}" class="text-decoration-none">
+                  More:
+              </a>
+            </div>
+        </div><br><br>
+      {% endfor %}
+    </div>
+
   </div>
-  {% endfor %}
+
+
+  <div class="w3-col overflow-hidden" style="height: 690px; width: 20%; background:#2A2F32;">
+  yo
+  </div>  
+
+
+
 </div>
-
-
 {% endblock %}

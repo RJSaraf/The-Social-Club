@@ -1,0 +1,55 @@
+{% extends "posts/post_baseTSC.html" %}
+
+{% block post_base %}
+
+
+{% block pre_post %}
+    
+    <div class="col-md-4">
+
+        {% if request.user.is_authenticated %}  
+        
+        <div class="card card-with-shadow">
+            <div class="content">
+                <h5 class="title">Your Groups</h5>
+                <ul>
+                    {% for member_group in get_user_groups %}
+                        <li>
+                            <a href="{% url 'TheSocialClub:single' slug=member_group.group.slug %}"></a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        {% endif %}
+
+        <div class="card card-with-shadow">
+            <div class="content">
+                <h5 class="title">All Groups</h5>
+                <ul>
+                    {% for other_group in get_other_groups %}
+                    <li class="li-with-bullet">
+                        <a href="{% url 'TheSocialClub:single' slug=other_group.slug %}"></a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock pre_post %}
+
+{% block post_content %}
+  
+    <div class="col-md-8">
+        {% for post in post_list %}
+          {% include "posts/_post.html" %}
+        {% endfor %}
+    </div>
+
+{% endblock post_content %}
+
+
+{% endblock post_base %}

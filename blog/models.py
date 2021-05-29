@@ -12,7 +12,9 @@ class Post(models.Model):
     text           = models.TextField()
     created_date   = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
-    postimage      = models.ImageField(upload_to='postimages',blank=True,default='defaultpost.jpg')
+    postimage      = models.ImageField(upload_to='blog/media/postimages',blank=True,default='defaultpost.jpg')
+    like           = models.ManyToManyField(User,related_name='likepost',null=True)
+    dislike        = models.ManyToManyField(User,related_name='dislikepost',null=True)
 
     def publish(self):
         self.published_date = timezone.now()
@@ -23,7 +25,12 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse("blog:post_detail", kwargs={"pk": self.pk})
-    
+
+
+    def dislikepost(self):
+        self.dislike = request.user
+        self.save()
+
     def __str__(self):
         return self.title
 
@@ -33,6 +40,8 @@ class Comment(models.Model):
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     approved_comments = models.BooleanField(default=False)
+    like           = models.ManyToManyField(User,related_name='likecomment')
+    dislike        = models.ManyToManyField(User,related_name='dislikecomment')
 
     def approve(self):
         self.approved_comments = True
@@ -40,6 +49,8 @@ class Comment(models.Model):
 
     def get_absolute_url(Comment):
         return reverse("blog:post_detail", kwargs={"pk": Comment.post.pk})
+
+    
     
     def __str__(self):
         return self.text

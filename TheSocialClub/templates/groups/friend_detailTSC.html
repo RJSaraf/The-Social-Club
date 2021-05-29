@@ -1,0 +1,193 @@
+{% extends "groups/group_baseTSC.html " %}
+{% load static %}
+{% load bootstrap3 %}
+{% block group_base %}
+
+<div class="w3-card-4 overflow-hidden position-static" style="height: 615px; width: auto; z-index:1;">
+    <!------------------------------------------------------------>  
+    <div class="w3-col overflow-hidden" style="height: 100% ; width: 26%; background:#2A2F32; border: 1px solid black;">
+
+        <div class="w3-container w3-center text-white pt-1">
+            <span class="p-2 w3-wide w3-xlarge w3-left">Chat</span>
+        </div>
+
+        <div class="w3-container p-3">
+            <input class="w3-round-xlarge w-100 w3-large pl-2" type="search" placeholder="Search Chats" style="outline: none;">
+        </div>
+
+        <div class="w3-col overflow-auto" style="height: 500px; background:#2A2F32;">
+            
+            {% for friend in friendlist %}
+            {% for user in friend.friends.all %}
+                <a href="{% url 'TheSocialClub:friendsingle' slug=user.username pk=user.id %}">
+                <div class="w3-row w3-hover-grey w3-text-white w-100">
+                    <img class="w3-circle w3-left w3-quarter m-2" src="{% if user.userinfo.propic %}{{user.userinfo.propic.url}}{% endif %}" style="height:40px;width:40px;">
+                    <div class="w3-col w-75 p-1">
+                        <div class="p-1">
+                            <div class="">{{ user.username}}<br/></div>
+                            {% for post in lastmsg %}
+                                <div class="small w3-text-white">{{post.msg_content}}<br/></div>
+                            {% endfor %}
+                        </div>
+                    </div>   
+                </div>
+                </a>
+            {% endfor %}
+            {% endfor %}
+
+        </div>  
+    
+    </div>
+
+    <!------------------------------------------------------------>
+    <div class="w3-blue w3-col position-relative" style="width: 74%; height: 657px">
+        
+        <div class="title" style="background: #2A2F32; height: 10%; width: auto;">
+            {% for user in reciever %}
+            <div class="w3-row m-1">
+                <div class="w3-left m-2"><img src="{% if user.userinfo.propic %}{{user.userinfo.propic.url}}{% endif %}" style="height:35px;width:35px;" class="w3-circle"></div>
+                <div class="w3-col s6 ml-1 mt-1">
+                    <div class="">{{user.username}}</div>
+                    <div class="small">{{user.username}}</div>        
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="overflow-hidden w3-white" style="background: #2A2F32; height: 72.1%; width: auto;">      
+            <div id="chatbox" class="overflow-auto w3-white my-1" style="height: 475px; width: auto;">
+                
+                {% for post in ptp %}
+                    <div class="row m-4">
+                        <div class="col">
+                            <div class="d-block w3-card-2 w3-round-large {% if post.reciever == request.user %}w3-left w3-green{% else %}w3-right w3-2021-french-blue{% endif %}">
+
+                                {% if post.reciever == request.user %}
+
+                                    {% if post.image %}
+                                        <div class="d-lg-block px-1 pt-1">
+                                            <img class="privatemsgimg w3-round" src="{{post.image.url}}">
+                                        </div>
+                                    {% endif %}
+
+                                    <div class="d-lg-block py-2">
+                                        
+                                        {% for user in reciever %}
+                                            <div class="w3-left px-2">
+                                                <img src="{% if user.userinfo.propic %}{{user.userinfo.propic.url}}{% endif %}" style="height:25px;width:25px;" class="w3-circle">
+                                            </div>
+                                        {% endfor %}
+
+                                        <span class="px-3">
+                                            {{post.msg_content}}
+                                        </span>
+                                        
+                                    </div>
+
+
+                                {% else %}
+
+                                    {% if post.image %}
+                                        <div class="d-lg-block p-1">
+                                            <img class="privatemsgimg w3-round" src="{{post.image.url}}">
+                                        </div>
+                                    {% endif %}
+
+                                    <div class="d-lg-block py-2">
+                                        
+                                        {% for user in reciever %}
+                                            <div class="w3-right px-2 pb-1">
+                                                <img src="{% if request.user.userinfo.propic %}{{request.user.userinfo.propic.url}}{% endif %}" style="height:25px;width:25px;" class="w3-circle">
+                                            </div>
+                                        {% endfor %}
+
+                                        <span class="w3-right px-3">
+                                            {{post.msg_content}}
+                                        </span>
+                                        
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}    
+                
+            </div>     
+        </div>
+
+        <div class="w3-container w3-card" style="background: #2A2F32; height: 16.9%; width: auto; bottom: 0; z-index: 22; box-sizing: border-box;">
+            
+            <div class="w3-left p-2 mt-2">
+                <button onclick="hide()" style="border: none; background: none;"><img src="{% static 'png/paper-clip.png' %}" style="height: 30px; width: 30px;"></button>
+            </div>
+           
+            <form class="msg-form" action="{% url 'TheSocialClub:createmsg' slug=slug pk=pk %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <div class="w3-container row pt-2">
+                        <div class="w3-round-xlarge col" style="background: #364147; height: 60px;">
+                            {{ form.as_p }}
+                        </div>    
+                        <input id='submit' type="submit" value="Post" class="ml-1 mt-3">
+                    </div>
+                
+            </form>
+
+            <script>
+
+                    console.log(window.location)
+                    var loc = window.location
+                    var myForm = $('msg-form')
+                    var msgInput = $('#msg-text')
+                    var chatbox = $('#chatbox')
+
+                    var wsStart = 'ws://'
+                    if(loc.protocol == 'https:'){
+                        wsStart = 'wss://'
+                    }
+
+                    var endpoint = wsStart + loc.host + loc.pathname
+                    var socket = new ReconnectingWebSocket(endpoint)
+
+                    socket.onmessage = function(e){
+                        console.log(e.data)
+                        chatbox.append()
+                    }
+                    socket.onopen = function(e){
+                        console.log('open', e)
+                        myForm.submit(function(event){
+                            event.preventDefault()
+                            var msgtext = msgInput.val()
+                            var data_dict = {'message':msgtext}
+                            socket.send(JSON.stringify(data_dict))
+                            myForm[0].reset()
+                        })
+                    }
+                    socket.onerror = function(e){
+                        console.log('error', e)
+                    }
+                    socket.onclose = function(e){
+                        console.log('close', e)
+                    }
+                         
+            </script>
+            
+        </div>
+
+    </div>
+    
+    <!------------------------------------------------------------>
+    <div class="w3-col overflow-hidden d-none" style="height: 100%; width: 15%; background:#2A2F32;">
+    
+     
+        
+    </div>
+
+
+
+</div>
+
+
+{% endblock group_base %}

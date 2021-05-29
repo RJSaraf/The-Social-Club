@@ -1,0 +1,47 @@
+<br>
+<div class="w3-white w3-card w3-round-large">
+   
+<br>  
+
+        <div class="w3-container w3-row">
+           
+            <a href="" class="w3-left w3-margin-right"><img src="{{post.user.userinfo.propic.url}}" style="height:40px;width:40px;" class=" w3-circle"></a>
+            
+            <div class="w3-col s6">
+                <span>
+                    <a href="{% url 'TheSocialClub:for_user' username=post.user.username %}" class="w3-text-black"><b>@{{post.user.username}}</b></a>
+                </span>
+                <br>
+                <time>
+                    <a href="{% url 'TheSocialClub:postsingle' username=post.user.username pk=post.pk %}" class="w3-text-blue-grey">
+                        {{post.created_at}}
+                    </a>
+                </time>
+            </div>
+        
+        </div>
+        
+        <div class="py-1">
+
+            <p class="w3-container">{{post.message|safe}}</p>
+            
+            {% if post.postimage %}
+                <img class="w3-round" style="height: 200px; width: 100%;" src="{{post.postimage.url}}">
+            {% endif %}
+            
+            <div class="mt-2 border-top border-dark">
+                <div class="row">
+                    <div class="col-4"><div class="w3-center">like</div></div>
+                    <div class="col-4"><div class="w3-center">Comment</div></div>
+                    <div class="col-4"><div class="w3-center">Dislike</div></div>
+                </div>    
+            </div>
+
+            {% if user.is_authenticated and post.user == user %}
+                <a href="{% url 'TheSocialClub:delete' pk=post.pk username=post.user.username %}" title="delete">
+                    <span class="w3-red">Delete</span>
+                </a>
+            {% endif %}
+            
+        </div>
+</div>

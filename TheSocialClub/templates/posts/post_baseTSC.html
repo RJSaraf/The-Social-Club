@@ -1,0 +1,20 @@
+{% extends "baseTSC.html" %}
+
+{% block base %}
+{% load static %} 
+
+{% block post_base %}
+  
+<div class="postpage">
+        <div class="w3-container">
+            <div class="row">
+                {% block pre_post %}{% endblock pre_post %}
+                {% block post_content %}{% endblock post_content %}
+                {% block post_post %}{% endblock post_post %}
+            </div>
+        </div>
+    </div>
+
+{% endblock post_base %}
+
+{% endblock base %}

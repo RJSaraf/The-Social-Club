@@ -11,171 +11,79 @@
         <link rel="stylesheet" type="text/css"  href="{% static 'css/style2.css'       %}">
         <link rel="stylesheet" type="text/css"  href="{% static 'css/style_footer.css' %}">
         <link rel="stylesheet" type="text/css"  href="{% static 'css/fontawesome.min.css' %}">
+       
         <script src="{% static 'js/index.js' %}"></script>
+        <script src="{% static 'js/medium_editor.js' %}"></script>
+        <script src="{% static 'js/jQuery.js' %}"></script>
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/w3.css' %}">
+        
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-grid.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-grid.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-reboot.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-reboot.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/medium_editor.css' %}">
+        
+        
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 </head>
 
 <body onload="('WELCOME!')" style="background-color : white;">
 
-    <nav class="navigation" id="nav">
+<nav class='navigation' id="nav">
 
-
-        <div id="dnav1">
-
-            <a href="{% url 'homepage:home' %}" id="lis2"><span id="s2"><i style="color:lime;font-size:32px;">Q</i>uantum LAB</span></a>
-            <a class="li" href="{% url 'accounts:feedback'%}"><span class="lispan">Feedback</span></a>
-            <a class="li"><span class="lispan">About</span></a>
-            <a class="li" href="{% url 'blog:post_list' %}"><span class="lispan">Blogs</span></a>
-            <a class="li"><span class="lispan">Contact</span></a>
-
-            <div class="dropdivnav">
-
-                <span class="drop">MORE</span>
-               
-                <div class="dropcontent">
-
-                    <a class="dropcontent-a"><span class="drop">MORE1</span></a>
-                    <a class="dropcontent-a"><span class="drop">MORE2</span></a>
-                    <a class="dropcontent-a"><span class="drop">MORE3</span></a>
-                    <a class="dropcontent-a"><span class="drop">MORE4</span></a>
-                    <a class="dropcontent-a"><span class="drop">MORE5</span></a>
-                    
-                </div>
-
-            </div>
-
+<div class="w3-half w3-black w3-left"> 
+    <a id="tdn" href="{% url 'homepage:home' %}" class="w3-bar-item w3-text-light-blue">Quantum LAB</a>
+    <a id="tdn" href="{% url 'accounts:feedback'%}" class="w3-bar-item w3-button">Feedback</a>
+    <a id="tdn" href="" class="w3-bar-item w3-button">About</a>
+    <a id="tdn" href="{% url 'blog:post_list' %}" class="w3-bar-item w3-button">Blog</a>
+    <a id="tdn" href="{% url 'TheSocialClub:home' slug=request.user %}" class="w3-bar-item w3-button">The Social Club</a>
+    <div class="w3-dropdown-hover">
+        <button class="w3-button">More</button>
+        <div class="w3-dropdown-content w3-bar-block w3-card-4">
+          <a href="#" class="w3-bar-item w3-button">Link 1</a>
+          <a href="#" class="w3-bar-item w3-button">Link 2</a>
+          <a href="#" class="w3-bar-item w3-button">Link 3</a>
         </div>
+    </div>
+</div>
 
 
+<div class="w3-half w3-blue w3-left">
+    {% if user.is_authenticated %}
+    <a href="" class="w3-bar-item w3-button"><img src="{% static 'png/003-wordpress.png' %}" style="height:22px;width:22px;"></a>
+    <a href="" class="w3-bar-item w3-button"><img src="{% static 'png/039-dropbox.png' %}" style="height:22px;width:22px;"></a>
+    <a href="" class="w3-bar-item w3-button"><img src="{% static 'png/021-chat.png' %}" style="height:22px;width:22px;"></a>
+    <a href="" class="w3-bar-item w3-button"><img src="{% static 'png/048-notification.png' %}" style="height:22px;width:22px;"></a>
+    
+    <a class="w3-bar-item w3-button" 
+    {% if request.user.userinfo %}
+    href="{% url 'accounts:details' user.id %}"  
+    {% else %}
+    href="{% url 'accounts:create_user_info' pk=user.id %}"
+    {% endif %}>
+    <img class="w3-circle" src="{% if request.user.userinfo.propic %}{{request.user.userinfo.propic.url}}{% endif %}" style="height:22px;width:22px;"></a>
+       
+    <a id="tdn" class="w3-bar-item w3-button w3-right" href="{% url 'accounts:logout'%}">LOGOUT</a>
+    <a id="tdn" class="w3-bar-item w3-button w3-right">Hello, <span style="padding-left:2px;" >{{user.first_name.upper}}</span></a>
 
-        {% if user.is_authenticated %}
-        <div class="user_icon_bar">
+    {% else %}
+    <a id="tdn" class="w3-bar-item w3-button w3-right" href="{% url 'accounts:login' %}">Login</a>
+    <a id="tdn" class="w3-bar-item w3-button w3-right" href="{% url 'accounts:signup' %}">Sign Up</a>
+    {% endif %}
+</div>
 
-            <a href="#" class="user_icon_bar_a"><img src="{% static 'png/003-wordpress.png' %}" class="iconimg"></a>
-            <a href="#" class="user_icon_bar_a"><img src="{% static 'png/039-dropbox.png' %}" class="iconimg"></a>
-            <a href="#" class="user_icon_bar_a"><img src="{% static 'png/021-chat.png' %}" class="iconimg"></a>
-            <a href="#" class="user_icon_bar_a"><img src="{% static 'png/048-notification.png' %}" class="iconimg"></a>
-            
-            <a 
-            {% if request.user.userinfo %}
-            href="{% url 'accounts:details' user.id %}" 
-            {% else %}
-            href="{% url 'accounts:create_user_info' pk=user.id %}"
-            {% endif %}
-            class="user_icon_bar_a"><img src="{% static 'png/035-user.png' %}" class="iconimg"></a>
+</nav>
 
-            <div id="user_icon">
-                
-                <div id="user_icon1">
-                 <span id="user_name">Hello, {{user.first_name}}</span>
-                 <a 
-                 {% if request.user.userinfo %}
-                 href="{% url 'accounts:details' user.id %}"  
-                 {% else %}
-                 href="{% url 'accounts:create_user_info' pk=user.id %}"
-                 {% endif %}>
-                 
-                 <img  src="{% if request.user.userinfo.propic %}{{request.user.userinfo.propic.url}}{% endif %}"  class="user_icon_image"></a>
-                
-                </div> 
-
-               <a style="text-decoration: none;" href="{% url 'accounts:logout'%}"><div id="user_icon2">LOGOUT</div></a>
-
-            </div>
-
-        </div>
-
-
-
-
-        {% endif %}
-
-    </nav>
-
-
-
-   {% block body_block %}
+{% block body_block %}
 
     <div id="divlogo">
         <br>
         <br>
-        <br>
-        <br>
-       
-        {% if not user.is_authenticated %} 
-
-        <div id="logreg">
-
-            <a class="ar1" href="accounts/register"><button class="r1" id="r1">SIGN UP</button></a>
-
-            <div class="login">
-                <div class="login_pop" id="login_pop">
-
-                    {% for message in messages %}
-                    <b>{{message}}</b>
-                    {% endfor %}
-                        
-
-                    <form action="{% url 'accounts:login'%}" method="POST" class="form-popup">
-
-                        {% csrf_token %}
-                        <h1 style="color:black; margin-left:15px;">Login</h1>
-                        {% csrf_token %}
-                        <label class="form-popup_font" for="username">Username</label><br><br>
-                        <input class="inputstyle1 inputstyle2" type="text" placeholder="Username" name="username" required>
-                        <br>
-                        <label class="form-popup_font" for="password"><b>Password</b></label><br><br>
-                        <input class="inputstyle1 inputstyle2" type="password" placeholder="Enter Password" name="password" required>
-                        <br>
-                        <button class="form-popup_button" type="submit" class="btn">Login</button>
-
-                    </form>
-
-                </div>
-
-                <div class="b1b2">
-                    <button class="b1" id="close_close" onclick="Close(),Openlogin(),Closeclose()">Close</button>
-                    <button class="b2" id="login_close" onclick="login(),Closelogin(),Openclose()">LOGIN</button>
-                </div>
-
-            </div>
-
-        </div>
-
-        {% endif %}
-
-        <script>
-
-            function login() {
-                document.getElementById('login_pop').style = "display:block;"
-            };
-
-            function Close() {
-                document.getElementById('login_pop').style = "display:none;"
-            };
-
-            function Openlogin() {
-                document.getElementById('login_close').style = "display:block;"
-            };
-
-            function Closelogin() {
-                document.getElementById('login_close').style = "display:none;"
-            };
-
-            function Openclose() {
-                document.getElementById('close_close').style = "display:block;"
-            };
-
-            function Closeclose() {
-                document.getElementById('close_close').style = "display:none;"
-            };
-
-        </script>
-
-        <br>
-        <br>
-
-        <input class="nav-search" type="text" placeholder="Search">
+        
 
     </div>
 

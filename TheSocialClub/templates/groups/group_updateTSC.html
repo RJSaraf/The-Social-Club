@@ -1,0 +1,21 @@
+{% extends "groups/group_baseTSC.html" %}
+{% block group_base %}
+{% load bootstrap3 %}
+
+    {% block group_content %}
+
+    <div class="w3-container">
+        <br><h4>Update your group!</h4>
+    
+        <br>
+        <form method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <input type="submit" class="w3-button w3-green">
+        </form>
+
+    </div>    
+
+    {% endblock group_content %}
+
+{% endblock group_base %}

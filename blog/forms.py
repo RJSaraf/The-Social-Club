@@ -12,7 +12,7 @@ class PostForm(forms.ModelForm):
 
         widgets = {
             'title':forms.TextInput(attrs={'class':'textinputclass'}),
-            'text':forms.Textarea(attrs={'class':'postcontent'}),            
+            'text':forms.Textarea(attrs={'class':'postcontent editable'}),            
         }
         
 
@@ -24,6 +24,6 @@ class CommentForm(forms.ModelForm):
 
             widgets = {
                 
-                'text':forms.Textarea(attrs={'class':'postcontent'})
+                'text':forms.Textarea(attrs={'class':'postcontent editable'})
     
             }

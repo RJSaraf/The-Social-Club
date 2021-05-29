@@ -1,8 +1,13 @@
 /* Custom Frameworks */
-.tdn{
+
+#tdn{
 	text-decoration: none;
 }
 
+.tdn{
+	text-decoration: none;
+	color:red;
+}
 
 /* Custom Frameworks */
 
@@ -12,7 +17,7 @@
 	background-size:cover;
 	background-size: 100% 100%;
 	height:550px;
-	width:1340px;
+	width:100%;
 	position:relative;
 	right:8px;
 	top:-8px;
@@ -59,22 +64,21 @@ dnav1 a {
 	height:42px;
 	width:200px;
 	position:relative;
-	float: left;
+	float:left;
 	text-decoration: none;
 	
 }
 
 
 .navigation{
-	background:black;
-	width:1340px;
-	height:42px;
 	z-index:1;
 	position:fixed;
 	top:0;
-	left:0px;
 	transition: top 0.8s;
+	width: 100%;
+
 }
+
 
 .nav-search{
 	height:39px;
