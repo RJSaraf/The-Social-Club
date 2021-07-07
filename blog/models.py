@@ -28,7 +28,7 @@ class Post(models.Model):
 
 
     def dislikepost(self):
-        self.dislike = request.user
+        self.dislike = self.request.user
         self.save()
 
     def __str__(self):
@@ -50,8 +50,6 @@ class Comment(models.Model):
     def get_absolute_url(Comment):
         return reverse("blog:post_detail", kwargs={"pk": Comment.post.pk})
 
-    
-    
     def __str__(self):
         return self.text
         

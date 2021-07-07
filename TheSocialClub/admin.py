@@ -18,4 +18,5 @@ class Message(admin.ModelAdmin):
 admin.site.register(models.Group)
 admin.site.register(models.Post)
 admin.site.register(models.FriendsList)
-admin.site.register(models.PrivateMessage, Message)
+admin.site.register(models.FriendRequest)
+admin.site.register(models.PrivateMessage)

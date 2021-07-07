@@ -1,167 +1,257 @@
 {% extends 'index.html' %}
-{% block body_block %}
+{% block body_index %}
 {% load static %}
 <!DOCTYPE html>
    
-       <link rel="stylesheet" type="text/css" href="{% static 'css/user_profile.css' %}">
-       <link rel="stylesheet" type="text/css" href="{% static 'css/w3.css' %}">
-       <link rel="stylesheet" type="text/css"  href="{% static 'css/style1.css'}">
+    <style>
+        #cover{
+            background-image : url({{user.cover.url}});
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
 
- <div class="section_A ">
+        #coverblur{
+            background: -moz-linear-gradient(bottom, rgb(253, 251, 251) 0%, rgba(255, 255, 255, 0.486) 40%, rgb(92, 206, 221) 100%); /* FF3.6+ */
+           
+        }
 
-    <div class= "section_back" >
+        
 
-    <div class="section1" >
+   </style>
+    
+   <link rel="stylesheet" type="text/css" href="{% static 'css/w3.css' %}">
 
-        <img src="{% if request.user.userinfo.propic %}{{detail.propic.url}}{% endif %}" class="w3-hover-grayscale" id="profile_image">
+<div class="overflow-auto position-relative mt-4">
 
+    <div id="coverblur" class="w-100 w3-card-2">
 
+        <div class="col-lg-9 col-md-10 col-sm-12 mx-auto" style="height:550px;">
 
-
-
-
-
-
-  
-
-
-  <div class="section2">
-
-   <div class="section2_1">
-
-       <div class="user_npl">
-
-           <span class="username">{{user.first_name.upper}} {{ user.last_name.upper}}</span>
-           <span class="userlocation tcenter"><img class="smallimg" src="{% static 'png/006-pin.png' %}">JABALPUR, M.P.</span>
+            <div id="cover" class="w-100 w3-display-container w3-round-xlarge" style="height:65%;">
+                <div class="w3-display-bottommiddle" style="bottom:-30px; z-index: 1;">
+                    <img class="w3-circle border border-2" src="{{user.propic.url}}" style="height:200px; width:200px;">
+                </div>   
+            </div>
             
-           <span class="userprofession w3-text-light w3-text-deep-orange">{{detail.profession}}</span>
-          
-           <div class="starrating">
+            <div class="w-100 w3-display-container" style="height:25%;">
 
-               <span class="starspan">7.0</span>
-               <div class="stars">
-                   <img class="starimg" src="{% static 'png/star-3-240.png' %}">
-                   <img class="starimg" src="{% static 'png/star-3-240.png' %}">
-                   <img class="starimg" src="{% static 'png/star-3-240.png' %}">
-                   <img class="starimg" src="{% static 'png/star-thin-240.png' %}">
-                   <img class="starimg" src="{% static 'png/star-thin-240.png' %}">
-               </div>
+                <div class="w3-text-black w3-xlarge w3-display-middle">{{user.user.first_name|title}} {{user.user.last_name|capfirst}}</div>
+
+            </div>
+            
+            
+            <div class="w-100" style="height:10%;">
 
 
-           </div>
+                <div class="d-block border-top mx-auto" style="width:80%">
+                    
+                    <div class="d-inline-block p-3 mx-1 w3-text-blue w3-hover-light-gray w3-round-large">
+                        <span class="p-2">Post</span>
+                    </div>
+                    
+                    <div class="d-inline-block p-3 mx-1 w3-hover-light-gray w3-round-large w3-hide-small">
+                        <span class="">About</span>
+                    </div>
 
-       </div>
+                    <div class="d-inline-block p-3 mx-1 w3-hover-light-gray w3-round-large w3-hide-small w3-hide-medium">
+                        {% for friend in friendlist %}
+                            <span>Friends</span><span class="w3-small"> {{friend.friends.count}}</span>
+                        {% endfor %}
+                    </div>
 
-     <div class="sm_con_re">
+                    <div class="d-inline-block p-3 mx-1 w3-hover-light-gray w3-round-large w3-hide-small w3-hide-medium">
+                        <span class="">Blogs</span>
+                    </div>
 
-         <span class="sm_con_re_span">Send Message</span>
-         <span class="sm_con_re_span">Contact</span>
-         <span class="sm_con_re_span">Report</span>
+                    <div class="d-inline-block w3-hover-light-gray w3-round-large p-3 mx-1">
+                        <span class="">More</span>
+                    </div>
+                    
+                    {% if request.user == user.user %}
+                    <div class="d-inline-block w3-light-gray btn w3-hover-gray mx-1">
+                        <a href="{% url 'accounts:edit_user_info' slug=user.slug %}" class="text-decoration-none"><span class="w3-text-black">Edit Profile</span></a>
+                    </div>
+                    {% endif %}
 
-     </div>
+                    <div class="friendrequestbutton d-inline-block mx-1">
+                        {% for f in sentfriendrequest %}
+                    
+                            <a href="{% url 'TheSocialClub:CancelRequest' sender=request.user.username reciever=user.slug %}"><div class="w3-pink btn w3-hover-red p-2">Cancel Request</div></a>
+    
+                        {% endfor %} 
+                        
+                        {% if not user.user == request.user %}
+                            {% if is_friend.isf == False %}
+                                {% if is_active.yn == False %}
+                                        
+                                    <a href="{% url 'TheSocialClub:RequestFriend' sender=request.user.username reciever=user.slug %}"><div class="btn w3-hover-blue w3-green p-2">Add Friend</div></a>
+                                        
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}       
+                    
+    
+                        {% for f in friendlist %}
+                            {% if request.user in f.friends.all %}
+                                <a href="{% url 'TheSocialClub:unfriend' remover=request.user.username removee=user.slug %}"><div class="btn w3-hover-pink w3-yellow p-2">Unfriend</div></a>
+                            {% endif %}
+                        {% endfor %}      
+                    </div>
 
+                </div>
+
+            </div>
+        
+        </div>
+
+    </div><!-- Cover -->
+
+    <div class="w-100" style="background-color: #e4f0f6;">
+
+        <div class="col-lg-9 col-md-10 d-flex flex-wrap row mx-auto py-3">
+            <div class="left col-lg-5 col-md-5 col-sm-12">
+                <div class="" style="position: sticky;">
+                    
+                    <div class="w3-card-2 m-4 w3-container w-100 mx-auto bg-light w3-round-large">
+                        
+                        <div class="p-2">
+                            <span class="w3-large"><b>Intro</b></span>
+                        </div>
+
+                        <div class="p-2 row d-block">
+                            <div class="col-12 row d-block p-2">
+                                <div class="w3-left mr-4 col-1"><img src="{% static 'png/gift-box.png'%}" style="height:25px;width:25px;" class="w3-circle"></div>
+                                <div class="col-12">{{user.birth_date}}</div>
+                            </div>
+                            <div class="col-12 row d-block p-2">
+                                <div class="w3-left mr-4 col-1"><img src="{% static 'png/businessman.png'%}" style="height:25px;width:25px;" class="w3-circle"></div>
+                                <div class="col-12">{{user}}</div>
+                            </div>
+                            <div class="col-12 row d-block p-2">
+                                <div class="w3-left mr-4 col-1"><img src="{% static 'png/education.png'%}" style="height:25px;width:25px;" class="w3-circle"></div>
+                                <div class="col-12">{{user.profession}}</div>
+                            </div>
+                            <div class="col-12 row d-block p-2">
+                                <div class="w3-left mr-4 col-1"><img src="{% static 'png/google-maps.png'%}" style="height:25px;width:25px;" class="w3-circle"></div>
+                                <div class="col-12">{{user.address}}, {{user.city}} {{user.state}}</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="w3-card-2 m-4 w3-container w-100 mx-auto bg-light w3-round-large">
+                        <div class="row p-2">
+                            <div class="col-12">
+                                <span class="w3-xlarge"><b>Friends</b></span>
+                                <span class="w3-right w3-text-blue">See All Friends</span>
+                            </div>
+
+                            <div class="col-12">
+                                {% for friend in friendlist %}
+                                    <span class="w3-text-blue-gray">{{friend.friends.count}} Friends</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                        <div class="row p-1">
+                            {% for user in limitedfriendlist %}
+                                <div class="col-4 p-2">
+                                    <a class="text-decoration-none" href="{% url 'accounts:details' slug=user.username %}">
+                                        <div class="w3-center"><img class="w3-round-large" src="{% if user.userinfo.propic %}{{user.userinfo.propic.url}}{% endif %}" style="height:100px; width:100px;"></div>
+                                    </a>
+                                <div class="w3-center w3-small mt-1">{{user.username}}</div>
+                                </div>
+                            {% endfor %}
+                        </div>    
+                        
+                    </div>
+
+
+                    <div class="w3-card-2 m-4 w3-container w-100 mx-auto bg-light w3-round-large">
+                        <div class="row p-2">
+                            <div class="col-12">
+                                <span class="w3-xlarge"><b>Blogs</b></span>
+                                <span class="w3-right w3-text-blue">See All Blogs</span>
+                            </div>
+
+                            <div class="col-12">
+                                <span class="w3-text-blue-gray">{{blogcount}} Blogs</span>
+                            </div>
+                        </div>
+                        
+                        <div class="row p-1">
+                            {% for blog in limitedbloglist %}
+                                <div class="col-4 p-2">
+                                    <a class="text-decoration-none" href="{{blog.get_absolute_url}}">
+                                        <div class="w3-center"><img class="w3-round-large" src="{% if blog.postimage %}{{blog.postimage.url}}{% endif %}" style="height:100px; width:100px;"></div>
+                                    </a>
+                                <div class="w3-center w3-small mt-1">{{blog.title}}</div>
+                                </div>
+                            {% endfor %}
+                        </div>    
+                        
+                    </div>
+
+
+
+                </div>
+            </div>
+
+            <div class="w3-right col-lg-7 col-md-7 col-sm-12">
+                {% if request.user == user.user %}
+                <div class="what's_on_your_mind w-75 mx-auto">
+
+                    <a onclick="document.getElementById('id01').style.display='block'">
+                        <div class="w3-row mt-2 w3-border bg-light w3-card-2 p-3 w3-round-large">
+                            <div class="w3-left m-2"><img src="{% if request.user.userinfo.propic %}{{request.user.userinfo.propic.url}}{% endif %}" style="height:35px;width:35px;" class="w3-circle"></div>
+                            <div class="w3-col s6 m-2 p-2 w-75 w3-round-xxlarge bg-secondary">
+                                <span class="text-decoration-none">Whats on your mind {{request.user.first_name.upper}}!</span>      
+                            </div>
+                        </div>
+                    </a>
+            
+                    <div id="id01" class="w3-modal">
+                    <div class="w3-modal-content w3-card-2">
+                        <header class="w3-container border-bottom"> 
+                        <span onclick="document.getElementById('id01').style.display='none'" 
+                        class="w3-button w3-display-topright">&times;</span>
+                        <h2>Create Post</h2>
+                        </header>
+                        <br>
+                        <div class="w3-container">
+                        <form action="{% url 'TheSocialClub:createpost' username=request.user.username %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" value="Post" class="w3-2021-french-blue w3-round-large" style="width:100%;">Post</button>
+                        </form>
+                        <br>
+                        </div>
+                    </div>
+                    </div>
+
+                </div>
+                {% endif %}
+
+                <div class="w-100 mr-auto">
+                    <div class="row">
+                        <div class="col">
+                            {% for post in posts %}
+                            {% include "posts/_post.html" %}
+                            {% empty %}
+                            <div class="p-3 m-2 w3-xlarge w3-text-blue-grey"><b>No posts available...</b></div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
     </div>
 
-   <div class="section2_2">
-
-       <div class="shift_info">
-           
-           <div class="shift_info_section"><img class="sisimg" src="{% static 'png/user.png' %}"><a class="pca w3-padding-16 tablinks" onclick="swipe(event, 'Personal')">Personal Info</a></div>
-           <div class="shift_info_section"><img class="sisimg" src="{% static 'png/identification.png' %}"><a class="pca w3-padding-16 tablinks" onclick="swipe(event, 'Contact')">Contact</a></div>
-           <div class="shift_info_section"><img class="sisimg" src="{% static 'png/sketchbook.png' %}"><a class="pca w3-padding-16 tablinks" onclick="swipe(event, 'Activity')">Activity</a></div>
-           <div class="shift_info_section"><img class="sisimg" src="{% static 'png/pencil.png' %}"><a class="pca w3-padding-16 tablinks tdn" href="{% url 'accounts:edit_user_info' pk=user.id %}">Edit</a></div>           
-       </div>
-       <br>
-       <div class="user_detail w3-container tabcontent w3-animate-right" id="Personal">
-
-           <div class="w3-row  w3-padding-8">
-               <div class="w3-col m3 w3-padding-16  ">Name:</div>
-               <div class="w3-col m7 w3-padding-16  w3-text-blue">{{user.first_name.upper}} {{user.last_name.upper}}</div>
-           </div>
-           <div class="w3-row  w3-padding-8">
-               <div class="w3-col m3 w3-padding-16  ">Birth Date:</div>
-               <div class="w3-col m7 w3-padding-16  ">{{detail.birth_date}}</div>
-           </div>
-
-           <div class="w3-row  w3-padding-8">
-               <div class="w3-col m3 w3-padding-16  ">Gender:</div>
-               <div class="w3-col m7 w3-padding-16  ">{{detail.gender}}</div>
-           </div>
-
-           <div class="w3-row  w3-padding-8">
-               <div class="w3-col m3  w3-padding-16  ">Age:</div>
-               <div class="w3-col m7  w3-padding-16  ">{{detail.age}}</div>
-           </div>
-
-           <div class="w3-row  w3-padding-8">
-               <div class="w3-col m3  w3-padding-16  ">Profession:</div>
-               <div class="w3-col m7  w3-padding-16  w3-text-blue">{{detail.profession}}</div>
-           </div>
-
-       </div>
 
 
-       <div class="user_detail_2 w3-container tabcontent w3-animate-right" id="Contact">
-
-           <div class="w3-row  w3-padding-8">
-               <div class="w3-col m3 w3-padding-16  ">Username:</div>
-               <div class="w3-col m7 w3-padding-16  ">{{user.username}}</div>
-           </div>
-
-           <div class="w3-row  w3-padding-8">
-               <div class="w3-col m3 w3-padding-16  ">Mobile:</div>
-               <div class="w3-col m7 w3-padding-16  w3-text-blue">{{detail.phone_number}}</div>
-           </div>
-
-           <div class="w3-row  w3-padding-8">
-               <div class="w3-col m3 w3-padding-16  ">Email:</div>
-               <div class="w3-col m7 w3-padding-16  w3-text-blue">{{user.email}}</div>
-           </div>
-
-           <div class="w3-row  w3-padding-8">
-               <div class="w3-col m3  w3-padding-16  ">Address:</div>
-               <div class="w3-col m7  w3-padding-16  ">{{detail.address}}</div>
-           </div>
-
-           <div class="w3-row  w3-padding-8">
-               <div class="w3-col m3  w3-padding-16  ">Country:</div>
-               <div class="w3-col m7  w3-padding-16  ">{{detail.country}}</div>
-           </div>
-
-       </div>
-
-       <div class="user_detail_3 w3-container tabcontent w3-animate-right" id="Activity">
-        
-        no activities yet...
-
-       </div>
-
-       <script>
-
-           function swipe(evt, swipe_id) {
-            var i, tabcontent, tablinks;
-             tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-               tabcontent[i].style.display = "none";
-             }
-             tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-             tablinks[i].className = tablinks[i].className.replace(" active", "");
-             }
-            document.getElementById(swipe_id).style.display = "block";
-            evt.currentTarget.className += " active";
-           
-           }  
-
-       </script>
-
-
-
-
-
-
-   </div>
 
 </div>
-
-{% endblock %}
+{% endblock body_index %}

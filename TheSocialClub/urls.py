@@ -18,7 +18,6 @@ urlpatterns = [
     url(r"^group/update/(?P<slug>[-\w]+)/$", views.UpdateGroups.as_view(), name="updategroup"),
     url(r"^posts/in_group/(?P<slug>[-\w]+)/$", views.SingleGroupsDetailView.as_view(), name="single"),
     url(r"^posts/in_friend/(?P<slug>[-\w]+)/(?P<pk>[-\w]+)/$", views.FriendsDetailView.as_view(), name="friendsingle"),
-    url(r"^posts/in_friend/create/(?P<slug>[-\w]+)/(?P<pk>[-\w]+)/$", views.PrivateMessageCreateView.as_view(), name="createmsg"),
     url(r"^join/(?P<slug>[-\w]+)/$", views.JoinGroup.as_view(), name="join"),
     url(r"^leave/(?P<slug>[-\w]+)/$", views.LeaveGroup.as_view(), name="leave"),    
 
@@ -29,4 +28,14 @@ urlpatterns = [
     url(r"post/by/(?P<username>[-\w]+)/$",views.UserPosts.as_view(),name="for_user"),
     url(r"post/by/(?P<username>[-\w]+)/(?P<pk>\d+)/$",views.PostDetail.as_view(),name="postsingle"),
     url(r"post/delete/(?P<pk>\d+)/(?P<username>[-\w]+)/$",views.DeletePost.as_view(),name="delete"),
+
+    # Message And Request
+
+    url(r"^posts/in_friend/create/(?P<slug>[-\w]+)/(?P<pk>[-\w]+)/$", views.PrivateMessageCreateView.as_view(), name="createmsg"),
+    url(r"^request/(?P<sender>[-\w]+)/(?P<reciever>[-\w]+)/$", views.RequestFriend.as_view() , name="RequestFriend"),
+    url(r"^acceptrequest/(?P<sender>[-\w]+)/(?P<reciever>[-\w]+)/$", views.AcceptRequest.as_view() , name="AcceptRequest"),
+    url(r"^cancelrequest/(?P<sender>[-\w]+)/(?P<reciever>[-\w]+)/$", views.CancelRequest.as_view() , name="CancelRequest"),
+    url(r"^declinerequest/(?P<sender>[-\w]+)/(?P<reciever>[-\w]+)/$", views.DeclineRequest.as_view() , name="DeclineRequest"),    
+    url(r"^unfriend/(?P<remover>[-\w]+)/(?P<removee>[-\w]+)/$", views.Unfriend.as_view() , name="unfriend"),    
+
 ]

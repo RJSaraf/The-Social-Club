@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.text import slugify
 
+from django.db import IntegrityError
+
 # Create your models here.
 # TheSocialClub
 
@@ -79,8 +81,72 @@ class FriendsList(models.Model):
     def __str__(self):
         return self.user.username
 
+    def add_friend(self, account):
+        if not account in self.friends.all():
+            self.friends.add(account)
+
+    def remove_friend(self, account):
+        if account in self.friends.all():
+            self.friends.remove(account)
+
+    def unfriend(self, removee):
+        self.remove_friend(removee) 
+        friends_list = FriendsList.objects.get(user=removee)
+        friends_list.remove_friend(self.user)
+
+    def is_mutual_friend(self, friend):
+        if friend in self.friends.all():
+            return True
+        return False
+
     class Meta:
         unique_together = ('user',)
+        
+
+
+class FriendRequest(models.Model):
+    sender      = models.ForeignKey(User, related_name='reqsender', on_delete=models.CASCADE)
+    reciever    = models.ForeignKey(User, related_name='reqreciever', on_delete=models.CASCADE)
+    is_active   = models.BooleanField(blank=True, null=False, default=True)
+    time        = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return (self.sender.username + '-' + self.reciever.username)
+
+    def accept(self):
+        
+            try:
+                reciever_friend_list = FriendsList.objects.get(user=self.reciever)
+                if reciever_friend_list:
+                    reciever_friend_list.add_friend(self.sender)
+
+            except FriendsList.DoesNotExist:
+                reciever_new_friend_list = FriendsList.objects.create(user=self.reciever)    
+                reciever_new_friend_list.add_friend(account=self.sender)
+
+
+            try:
+                sender_friend_list = FriendsList.objects.get(user=self.sender)
+                if sender_friend_list:
+                    sender_friend_list.add_friend(account=self.reciever)
+                    self.is_active = False
+                    self.save()
+
+            except FriendsList.DoesNotExist:
+                sender_new_friend_list = FriendsList.objects.create(user=self.sender)    
+                sender_new_friend_list.add_friend(account=self.reciever)
+                self.is_active = False
+                self.save()
+                
+            
+                
+    def decline(self):
+        self.is_active = False
+        self.save()
+
+    def cancel(self):
+        self.is_active = False
+        self.save()
 
 
 class PrivateMessage(models.Model):

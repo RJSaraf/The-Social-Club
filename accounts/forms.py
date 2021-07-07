@@ -24,7 +24,7 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = UserInfo
-        fields = ('phone_number','gender','birth_date','country','city','state','address','profession','age','propic')
+        fields = ('phone_number','gender','birth_date','country','city','state','address','profession','age','propic','cover')
 
         widgets = {
 
@@ -53,6 +53,7 @@ class UserForm(forms.ModelForm):
         self.fields['city'].label = 'City'
         self.fields['address'].label = 'Address'
         self.fields['propic'].label = 'Profile Image '
+        self.fields['propic'].label = 'Cover Photo '
 
    
 

@@ -25,10 +25,11 @@ from django.conf.urls import include
 from homepage.views import HomeView
 
 urlpatterns = [
-    url(r"^$", HomeView.as_view()),
+    url(r"^/$", HomeView.as_view()),
     url(r"^admin/", admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
+    url(r'^search/', include('haystack.urls')),
 
     path('', include('homepage.urls')),
     path('blog/', include('blog.urls')),

@@ -4,8 +4,12 @@ from django.contrib import auth
 from . import forms
 from django.contrib.auth.models import User, auth
 from TheSocialClub.forms import PostForm, GroupForm, ChatForm
-from TheSocialClub.models import Group, GroupMember, Post, FriendsList
+from TheSocialClub.models import Group, GroupMember, Post, FriendsList, FriendRequest
 from django.db.models import Q
+
+from haystack.generic_views import SearchView
+from django import forms
+from haystack.forms import SearchForm
 
 # Create your views here.
 # TheSocialClub
@@ -24,7 +28,7 @@ from django.urls import reverse
 
 from django.db import IntegrityError
 
-class TheSocialClub(LoginRequiredMixin, generic.TemplateView):
+class TheSocialClub(LoginRequiredMixin, SearchView):
     login_url = 'accounts:login'
     
     template_name = 'indexTSC.html'
@@ -33,8 +37,9 @@ class TheSocialClub(LoginRequiredMixin, generic.TemplateView):
         context = super(TheSocialClub, self).get_context_data(*args, **kwargs)
         context['grouplist'] = Group.objects.all()
         context['posts'] = Post.objects.all()
-        context['form'] = PostForm
+        context['postform'] = PostForm
         context['friendlist'] = FriendsList.objects.filter(user_id=self.request.user.id)
+        context['form'] = SearchForm
         return context
 
 
@@ -94,7 +99,7 @@ class FriendsDetailView(LoginRequiredMixin, generic.TemplateView):
         user = get_object_or_404(User, pk=self.kwargs.get('pk'))
         context['ptp'] = models.PrivateMessage.objects.filter( Q(reciever=user, sender=self.request.user) | Q(sender=user, reciever=self.request.user) )
        
-        context['lastmsg'] = models.PrivateMessage.objects.filter(Q(reciever=user) | Q(sender=user)).order_by('-created_at')[:1]
+        context['lastmsg'] = models.PrivateMessage.objects.all().order_by('-created_at')
        
         context['reciever'] = models.User.objects.filter(pk=self.kwargs.get('pk'))#Reciever Photo
         return context
@@ -116,6 +121,108 @@ class PrivateMessageCreateView(generic.CreateView):
         pk=self.kwargs.get('pk')
         slug=self.kwargs.get('slug')
         return reverse("TheSocialClub:friendsingle", kwargs={"pk": pk, 'slug':slug})
+
+
+class RequestFriend(LoginRequiredMixin, generic.RedirectView):
+
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse('accounts:details', kwargs={'slug':self.kwargs.get('reciever')})
+
+    def get(self, request, *args, **kwargs):
+        sender = get_object_or_404(User, username=self.kwargs.get('sender'))
+        reciever = get_object_or_404(User, username=self.kwargs.get('reciever'))
+
+        try:
+            req = FriendRequest.objects.create(sender=sender, reciever=reciever)
+            req.save()
+
+        except IntegrityError:
+            messages.warning(self.request,('Request Not Sent'))
+        else:
+            messages.success(self.request, 'Request Sent')
+
+        return super().get(request, *args, **kwargs)
+
+class AcceptRequest(LoginRequiredMixin, generic.RedirectView):
+
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse('homepage:home')
+
+    def get(self, request, *args, **kwargs):
+        sender = get_object_or_404(User, username=self.kwargs.get('sender'))
+        reciever = get_object_or_404(User, username=self.kwargs.get('reciever'))
+
+        try:
+            req = get_object_or_404(FriendRequest, sender=sender, reciever=reciever, is_active=True)
+            req.accept()
+
+        except IntegrityError:
+            messages.warning(self.request,('Not Accepted'))
+        else:
+            messages.success(self.request, 'Request Accepted')
+
+        return super().get(request, *args, **kwargs)
+
+class CancelRequest(LoginRequiredMixin, generic.RedirectView):
+
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse('accounts:details', kwargs={'slug':self.kwargs.get('reciever')})
+
+    def get(self, request, *args, **kwargs):
+        sender = get_object_or_404(User, username=self.kwargs.get('sender'))
+        reciever = get_object_or_404(User, username=self.kwargs.get('reciever'))
+
+        try:
+            req = get_object_or_404(FriendRequest, sender=sender, reciever=reciever, is_active=True)
+            req.cancel()
+
+        except IntegrityError:
+            messages.warning(self.request,('Request Not Canceled'))
+        else:
+            messages.success(self.request, 'Request Canceled')
+
+        return super().get(request, *args, **kwargs)
+
+class DeclineRequest(LoginRequiredMixin, generic.RedirectView):
+
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse('homepage:home')
+
+    def get(self, request, *args, **kwargs):
+        sender = get_object_or_404(User, username=self.kwargs.get('sender'))
+        reciever = get_object_or_404(User, username=self.kwargs.get('reciever'))
+
+        try:
+            req = get_object_or_404(FriendRequest, sender=sender, reciever=reciever, is_active=True)
+            req.decline()
+
+        except IntegrityError:
+            messages.warning(self.request,('Request Not Canceled'))
+        else:
+            messages.success(self.request, 'Request Canceled')
+
+        return super().get(request, *args, **kwargs)
+
+class Unfriend(LoginRequiredMixin, generic.RedirectView):
+
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse('homepage:home')
+
+    def get(self, request, *args, **kwargs):
+        remover = get_object_or_404(User, username=self.kwargs.get('remover'))
+        removee = get_object_or_404(User, username=self.kwargs.get('removee'))
+
+        try:
+            Friendlist = get_object_or_404(FriendsList, user=remover)
+            Friendlist.unfriend(removee=removee)
+
+        except IntegrityError:
+            messages.warning(self.request,('Unable to unfriend'))
+        else:
+            messages.success(self.request, 'Unfriended the user')
+
+        return super().get(request, *args, **kwargs)
+
 
 
 class JoinGroup(LoginRequiredMixin, generic.RedirectView):
