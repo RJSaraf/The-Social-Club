@@ -12,6 +12,8 @@ from django.utils import timezone
 from django.urls import reverse_lazy
 from django.urls import reverse
 
+from django.db.models import Count
+
 # Create your views here.
 # blog
 
@@ -22,7 +24,14 @@ class PostListView(ListView):
     template_name='post_list.html'
     # feild lookups django __lte
     def get_queryset(self):
-        return Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+        return Post.objects.filter(published_date__lte=timezone.now(), is_published=True).order_by('-published_date')
+
+    def get_context_data(self, *args, **kwargs):
+        
+        context = super(PostListView, self).get_context_data(*args, **kwargs)
+        context['mypost'] = Post.objects.filter(author=self.request.user, is_published=True).order_by('-published_date')      
+        context['mostpopular'] = Post.objects.all().annotate(count=Count('like')).order_by('-count')[:5]
+        return context
     
 
 class PostDetailView(DetailView):
@@ -69,7 +78,7 @@ class DraftListView(LoginRequiredMixin, ListView):
     context_object_name = 'posts'
     
     def get_queryset(self):
-        return Post.objects.filter(published_date__isnull=True).order_by('-created_date')
+        return Post.objects.filter(is_published = False).order_by('-created_date')
     
 ################################################################################################################################################
 

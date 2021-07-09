@@ -39,7 +39,7 @@ class ChatForm(forms.ModelForm):
         widgets = {
          
             'msg_content':forms.Textarea(attrs={'class':'msg_content', 'placeholder': 'Type a message', 'rows':4, 'cols':15, 'id':'msg-text'}),
-            'image':forms.ClearableFileInput(attrs={'class':'imagefield', 'id':'pmsgfile'}),
+            'image':forms.ClearableFileInput(attrs={'class':'image',}),
         }
         
     def __init__(self,*args,**kwargs):

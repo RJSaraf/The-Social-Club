@@ -12,12 +12,14 @@ class Post(models.Model):
     text           = models.TextField()
     created_date   = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
+    is_published   = models.BooleanField(blank=True, null=False, default=False)
     postimage      = models.ImageField(upload_to='blog/media/postimages',blank=True,default='defaultpost.jpg')
     like           = models.ManyToManyField(User,related_name='likepost',null=True)
     dislike        = models.ManyToManyField(User,related_name='dislikepost',null=True)
 
     def publish(self):
         self.published_date = timezone.now()
+        self.is_published = True
         self.save()
 
     def approve_comments(self):

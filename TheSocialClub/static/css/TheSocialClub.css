@@ -204,12 +204,6 @@ w3-2020-classic-blue
     background: none;
 }
 
-.title{
-  border-right: 1px solid black;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-}
-
 #submit{
       width: 0;
       height: 0;
@@ -221,12 +215,9 @@ w3-2020-classic-blue
 }
 
 
-.imagefield{
-  display: none;
-  height: 25px;
-  width: 100px;
-  padding: 1px;
-  bottom:0px;
+.image{
+  height: 30px;
+  width: 150px;
 }
 
 ::-webkit-file-upload-button {

@@ -11,10 +11,13 @@
         <link rel="stylesheet" type="text/css"  href="{% static 'css/style2.css'       %}">
         <link rel="stylesheet" type="text/css"  href="{% static 'css/style_footer.css' %}">
         <link rel="stylesheet" type="text/css"  href="{% static 'css/fontawesome.min.css' %}">
-       
+        
         <script src="{% static 'js/index.js' %}"></script>
-        <script src="{% static 'js/medium_editor.js' %}"></script>
         <script src="{% static 'js/jQuery.js' %}"></script>
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <script src="{% static 'js/popper.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/ajax.googleapis.js' %}"></script>
 
         <link rel="stylesheet" type="text/css" href="{% static 'css/w3.css' %}">
         
@@ -33,75 +36,77 @@
 
 <body onload="('WELCOME!')" style="background-color : white;">
 
-<nav class='navigation' id="nav">
+<div class='navigation d-flex' id="nav">
 
-<div class="w3-half w3-black w3-left"> 
-    <a id="tdn" href="{% url 'homepage:home' %}" class="w3-bar-item w3-text-light-blue">Quantum LAB</a>
-    <a id="tdn" href="{% url 'accounts:feedback'%}" class="w3-bar-item w3-button">Feedback</a>
-    <a id="tdn" href="" class="w3-bar-item w3-button">About</a>
-    <a id="tdn" href="{% url 'blog:post_list' %}" class="w3-bar-item w3-button">Blog</a>
-    <a id="tdn" href="{% url 'TheSocialClub:home' slug=request.user %}" class="w3-bar-item w3-button">The Social Club</a>
-    <div class="w3-dropdown-hover">
-        <button class="w3-button">More</button>
-        <div class="w3-dropdown-content w3-bar-block w3-card-4">
-          <a href="#" class="w3-bar-item w3-button">Link 1</a>
-          <a href="#" class="w3-bar-item w3-button">Link 2</a>
-          <a href="#" class="w3-bar-item w3-button">Link 3</a>
+    <div class="d-inline-block w-50 w3-black"> 
+        <a id="tdn" href="{% url 'homepage:home' %}" class="w3-bar-item w3-text-light-blue mx-1">Quantum LAB</a>
+        <a id="tdn" href="" class="w3-bar-item w3-button w3-hide-medium w3-hide-small">About</a>
+        <a id="tdn" href="{% url 'blog:post_list' %}" class="w3-bar-item w3-button w3-hide-small">Blog</a>
+        <a id="tdn" href="{% url 'TheSocialClub:home' slug=request.user %}" class="w3-bar-item w3-button w3-hide-small">The Social Club</a>
+        <div class="w3-dropdown-hover">
+            <button class="w3-button">More</button>
+            <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                <a id="tdn" href="#" class="w3-bar-item w3-button w3-hide-large">About</a>
+                <a id="tdn" href="{% url 'blog:post_list' %}" class="w3-bar-item w3-button w3-hide-large w3-hide-medium">Blog</a>
+                <a id="tdn" href="{% url 'TheSocialClub:home' slug=request.user %}" class="w3-bar-item w3-button w3-hide-large w3-hide-medium">The Social Club</a>
+                <a id="tdn" href="#" class="w3-bar-item w3-button w3-hide-large">Messanger</a>
+                <a id="tdn" href="#" class="w3-bar-item w3-button">Link 1</a>
+                <a id="tdn" href="#" class="w3-bar-item w3-button">Link 2</a>    
+            </div>
         </div>
     </div>
-</div>
 
 
-<div class="w3-half w3-blue w3-left">
-    {% if request.user.is_authenticated %}
-        <a href="/search/" class="w3-bar-item w3-button"><img src="{% static 'png/loupe.png' %}" style="height:22px;width:22px;"></a>
-        <a href="" class="w3-bar-item w3-button"><img src="{% static 'png/003-wordpress.png' %}" style="height:22px;width:22px;"></a>
-        <a href="" class="w3-bar-item w3-button"><img src="{% static 'png/021-chat.png' %}" style="height:22px;width:22px;"></a>
-        
-        <div class="w3-dropdown-hover">
-            <div class="w3-bar-item w3-button">
-                <img src="{% static 'png/048-notification.png' %}" style="height:22px;width:22px;">
-                <i class="w3-pink w3-circle" style="height:3px; width:3px; right:10px; position: relative;">
-                   {% for friends in friendrequest %}
-                   *
-                   {% endfor %} 
-                </i>
+    <div class="d-inline-block w-50 w3-blue">
+        {% if request.user.is_authenticated %}
+            <a href="/search/" class="w3-bar-item w3-button w3-hide-small"><img src="{% static 'png/loupe.png' %}" style="height:22px;width:22px;"></a>
+            <a href="" class="w3-bar-item w3-button w3-hide-medium w3-hide-small"><img src="{% static 'png/003-wordpress.png' %}" style="height:22px;width:22px;"></a>
+            <a href="" class="w3-bar-item w3-button w3-hide-medium w3-hide-small"><img src="{% static 'png/021-chat.png' %}" style="height:22px;width:22px;"></a>
+            
+            <div class="w3-dropdown-hover">
+                <div class="w3-bar-item w3-button">
+                    <img src="{% static 'png/048-notification.png' %}" style="height:22px;width:22px;">
+                    <i class="w3-pink w3-circle" style="height:3px; width:3px; right:10px; position: relative;">
+                    {% for friends in friendrequest %}
+                    *
+                    {% endfor %} 
+                    </i>
+                </div>
+
+                <div class="w3-dropdown-content w3-card-4">
+                    {% for friends in friendrequest %}
+                        <div class="w3-button w3-hover-black p-4 w3-black w-100 d-block">
+                            <span class="w3-text-aqua">{{friends.sender.username}}</span> <span class="w3-text-white"> sent you a friend request. </span> 
+                            <a href="{% url 'TheSocialClub:AcceptRequest' reciever=request.user.username sender=friends.sender.username %}"><div class="w3-text-green d-inline-block">Accept</div></a>
+                            <a href="{% url 'TheSocialClub:DeclineRequest' reciever=request.user.username sender=friends.sender.username %}"><div class="w3-text-red d-inline-block">Decline</div></a>
+                        </div>
+                    {% endfor %}
+                    
+                </div>
             </div>
+            
 
-            <div class="w3-dropdown-content w3-card-4">
-                {% for friends in friendrequest %}
-                    <div class="w3-button w3-hover-black p-4 w3-black w-100 d-block">
-                        <span class="w3-text-aqua">{{friends.sender.username}}</span> <span class="w3-text-white"> sent you a friend request. </span> 
-                        <a href="{% url 'TheSocialClub:AcceptRequest' reciever=request.user.username sender=friends.sender.username %}"><div class="w3-text-green d-inline-block">Accept</div></a>
-                        <a href="{% url 'TheSocialClub:DeclineRequest' reciever=request.user.username sender=friends.sender.username %}"><div class="w3-text-red d-inline-block">Decline</div></a>
-                    </div>
-                {% endfor %}
-                
-            </div>
-        </div>
-        
+            <a class="w3-bar-item w3-button" 
+            {% if request.user.userinfo %}
+            href="{% url 'accounts:details' slug=request.user.username %}"  
+            {% else %}
+            href="{% url 'accounts:create_user_info' slug=request.user.username %}"
+            {% endif %}>
+                <img class="w3-circle" src="{% if request.user.userinfo.propic %}{{request.user.userinfo.propic.url}}{% endif %}" style="height:22px;width:22px;">
+            </a>
+            
+            <a id="tdn" class="w3-bar-item w3-button w3-right" href="{% url 'accounts:logout'%}">LOGOUT</a>
+            <a id="tdn" class="w3-bar-item w3-button w3-right w3-hide-small">Hello, <span style="padding-left:2px;" >{{request.user.first_name.upper}}</span></a>
 
-        <a class="w3-bar-item w3-button" 
-        {% if request.user.userinfo %}
-        href="{% url 'accounts:details' slug=request.user.username %}"  
         {% else %}
-        href="{% url 'accounts:create_user_info' slug=request.user.username %}"
-        {% endif %}>
-            <img class="w3-circle" src="{% if request.user.userinfo.propic %}{{request.user.userinfo.propic.url}}{% endif %}" style="height:22px;width:22px;">
-        </a>
-        
-        <a id="tdn" class="w3-bar-item w3-button w3-right" href="{% url 'accounts:logout'%}">LOGOUT</a>
-        <a id="tdn" class="w3-bar-item w3-button w3-right">Hello, <span style="padding-left:2px;" >{{request.user.first_name.upper}}</span></a>
 
-    {% else %}
+            <a id="tdn" class="w3-bar-item w3-button w3-right" href="{% url 'accounts:login' %}">Login</a>
+            <a id="tdn" class="w3-bar-item w3-button w3-right" href="{% url 'accounts:signup' %}">Sign Up</a>
 
-        <a id="tdn" class="w3-bar-item w3-button w3-right" href="{% url 'accounts:login' %}">Login</a>
-        <a id="tdn" class="w3-bar-item w3-button w3-right" href="{% url 'accounts:signup' %}">Sign Up</a>
+        {% endif %}
+    </div>
 
-    {% endif %}
 </div>
-
-</nav>
 
 {% block body_index %}
 

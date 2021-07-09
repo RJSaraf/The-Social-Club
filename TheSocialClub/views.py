@@ -90,17 +90,14 @@ class FriendsDetailView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'groups/friend_detailTSC.html'
 
     def get_context_data(self, *args, **kwargs):
+        user = get_object_or_404(User, pk=self.kwargs.get('pk'))
+        
         context = super(FriendsDetailView, self).get_context_data(*args, **kwargs)
         context['grouplist'] = Group.objects.all()
         context['form'] = ChatForm
         context['friendlist'] = FriendsList.objects.filter(user_id=self.request.user.id)
-        #filter(Q(user1=self.request.user) | Q(user2=self.request.user))
-        
-        user = get_object_or_404(User, pk=self.kwargs.get('pk'))
         context['ptp'] = models.PrivateMessage.objects.filter( Q(reciever=user, sender=self.request.user) | Q(sender=user, reciever=self.request.user) )
-       
         context['lastmsg'] = models.PrivateMessage.objects.all().order_by('-created_at')
-       
         context['reciever'] = models.User.objects.filter(pk=self.kwargs.get('pk'))#Reciever Photo
         return context
 

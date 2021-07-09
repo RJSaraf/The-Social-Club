@@ -54,15 +54,23 @@ class UserView(DetailView, LoginRequiredMixin):
          return True
       else:
          return False
+
+   def intersection(self, lst1, lst2):
+    lst3 = [value for value in lst1 if value in lst2]
+    return lst3
             
    def get_context_data(self, *args, **kwargs):
       user = get_object_or_404(User, username=self.kwargs.get('slug'))
       Friends = get_object_or_404(FriendsList, user=user).friends.all().order_by('id')[:9]
-      blogcount = models.Post.objects.filter(author=user).count()
+      blogcount = models.Post.objects.filter(author=user, is_published=True).count()
+      userFL = list(get_object_or_404(FriendsList, user=user).friends.all())
+      requserFL = list(get_object_or_404(FriendsList, user=self.request.user).friends.all())
+      mutual_friend = self.intersection(lst1=userFL, lst2=requserFL)
+      print(len(mutual_friend))
 
       context = super(UserView, self).get_context_data(*args, **kwargs)
       context['blogcount'] = blogcount
-      context['limitedbloglist'] = models.Post.objects.filter(author=user)[:9]
+      context['limitedbloglist'] = models.Post.objects.filter(author=user, is_published=True)[:9]
       context['posts'] = Post.objects.filter(user=user)
       context['form'] = PostForm
       context['friendlist'] = FriendsList.objects.filter(user=user)
@@ -70,7 +78,8 @@ class UserView(DetailView, LoginRequiredMixin):
       context['sentfriendrequest'] = FriendRequest.objects.filter(sender=self.request.user, reciever=user, is_active=True) # Cancel Request
       context['is_active'] = {"yn" : self.is_active()} # Add Friend
       context['friendrequest'] = FriendRequest.objects.filter(reciever=self.request.user, is_active=True) #For Navbar
-      context['is_friend'] = {"isf" : self.is_friend()} # Is Friend 
+      context['is_friend'] = {"isf" : self.is_friend()} # Is Friend
+      context['mutual_friend'] = len(mutual_friend)
       return context
 
    

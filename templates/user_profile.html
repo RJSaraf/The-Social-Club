@@ -4,6 +4,7 @@
 <!DOCTYPE html>
    
     <style>
+
         #cover{
             background-image : url({{user.cover.url}});
             background-repeat: no-repeat;
@@ -15,13 +16,17 @@
            
         }
 
+      
+        @media only screen and (max-width: 976px) {.aout {width: 75%;}}
+        @media only screen and (min-width: 1138px) {.aout {width: 90%;}}
+        @media only screen and (max-width: 1140px) {.bout {width: 75%;}}
         
 
    </style>
     
    <link rel="stylesheet" type="text/css" href="{% static 'css/w3.css' %}">
 
-<div class="overflow-auto position-relative mt-4">
+<div class="overflow-auto position-relative">
 
     <div id="coverblur" class="w-100 w3-card-2">
 
@@ -34,49 +39,46 @@
             </div>
             
             <div class="w-100 w3-display-container" style="height:25%;">
-
-                <div class="w3-text-black w3-xlarge w3-display-middle">{{user.user.first_name|title}} {{user.user.last_name|capfirst}}</div>
-
+                <div class="w3-display-middle">
+                    <span class="w3-text-black w3-xlarge font-weight-bold text-justify">{{user.user.first_name|title}} {{user.user.last_name|capfirst}}</span>
+                </div>
             </div>
             
             
-            <div class="w-100" style="height:10%;">
-
-
-                <div class="d-block border-top mx-auto" style="width:80%">
+            <div class="w-100 border-top" style="height:10%;">
                     
-                    <div class="d-inline-block p-3 mx-1 w3-text-blue w3-hover-light-gray w3-round-large">
+                    <div class="d-inline-block p-3 w3-text-blue w3-hover-light-gray w3-round-large">
                         <span class="p-2">Post</span>
                     </div>
                     
-                    <div class="d-inline-block p-3 mx-1 w3-hover-light-gray w3-round-large w3-hide-small">
+                    <div class="d-inline-block p-3 w3-hover-light-gray w3-round-large w3-hide-small w3-hide-medium">
                         <span class="">About</span>
                     </div>
 
-                    <div class="d-inline-block p-3 mx-1 w3-hover-light-gray w3-round-large w3-hide-small w3-hide-medium">
+                    <div class="d-inline-block p-3 w3-hover-light-gray w3-round-large w3-hide-small">
                         {% for friend in friendlist %}
                             <span>Friends</span><span class="w3-small"> {{friend.friends.count}}</span>
                         {% endfor %}
                     </div>
 
-                    <div class="d-inline-block p-3 mx-1 w3-hover-light-gray w3-round-large w3-hide-small w3-hide-medium">
+                    <div class="d-inline-block p-3 w3-hover-light-gray w3-round-large w3-hide-small w3-hide-medium">
                         <span class="">Blogs</span>
                     </div>
 
-                    <div class="d-inline-block w3-hover-light-gray w3-round-large p-3 mx-1">
+                    <div class="d-inline-block w3-hover-light-gray w3-round-large p-3">
                         <span class="">More</span>
                     </div>
                     
                     {% if request.user == user.user %}
-                    <div class="d-inline-block w3-light-gray btn w3-hover-gray mx-1">
+                    <div class="w3-right d-inline-block w3-light-gray btn w3-hover-gray m-2">
                         <a href="{% url 'accounts:edit_user_info' slug=user.slug %}" class="text-decoration-none"><span class="w3-text-black">Edit Profile</span></a>
                     </div>
                     {% endif %}
 
-                    <div class="friendrequestbutton d-inline-block mx-1">
+                    <div class="friendrequestbutton w3-right d-inline-block m-2">
                         {% for f in sentfriendrequest %}
                     
-                            <a href="{% url 'TheSocialClub:CancelRequest' sender=request.user.username reciever=user.slug %}"><div class="w3-pink btn w3-hover-red p-2">Cancel Request</div></a>
+                            <a href="{% url 'TheSocialClub:CancelRequest' sender=request.user.username reciever=user.slug %}"><div class="w3-pink btn w3-hover-red">Cancel Request</div></a>
     
                         {% endfor %} 
                         
@@ -84,7 +86,7 @@
                             {% if is_friend.isf == False %}
                                 {% if is_active.yn == False %}
                                         
-                                    <a href="{% url 'TheSocialClub:RequestFriend' sender=request.user.username reciever=user.slug %}"><div class="btn w3-hover-blue w3-green p-2">Add Friend</div></a>
+                                    <a href="{% url 'TheSocialClub:RequestFriend' sender=request.user.username reciever=user.slug %}"><div class="btn w3-hover-blue w3-green">Add Friend</div></a>
                                         
                                 {% endif %}
                             {% endif %}
@@ -93,14 +95,21 @@
     
                         {% for f in friendlist %}
                             {% if request.user in f.friends.all %}
-                                <a href="{% url 'TheSocialClub:unfriend' remover=request.user.username removee=user.slug %}"><div class="btn w3-hover-pink w3-yellow p-2">Unfriend</div></a>
+                                <a href="{% url 'TheSocialClub:unfriend' remover=request.user.username removee=user.slug %}"><div class="btn w3-hover-pink w3-yellow">Unfriend</div></a>
                             {% endif %}
                         {% endfor %}      
                     </div>
 
-                </div>
+                    {% if not request.user == user.user %}
+                    <div class="w3-right d-inline-block w3-light-gray btn w3-hover-gray m-2 ">
+                        <img class="w3-circle border border-2" src="{% static 'png/019-messenger.png' %}" style="height:20px; width:20px;">
+                        <a href="{% url 'TheSocialClub:friendsingle' slug=user.slug pk=user.user.id %}" class="text-decoration-none"><span class="w3-text-black">Message</span></a>
+                    </div>
+                    {% endif %}
 
             </div>
+
+            
         
         </div>
 
@@ -148,7 +157,8 @@
 
                             <div class="col-12">
                                 {% for friend in friendlist %}
-                                    <span class="w3-text-blue-gray">{{friend.friends.count}} Friends</span>
+                                    <span class="w3-text-blue-gray">Friends {{friend.friends.count}}</span>
+                                    <span class="w3-text-blue-gray">(Mutual Friends {{mutual_friend}})</span>
                                 {% endfor %}
                             </div>
                         </div>

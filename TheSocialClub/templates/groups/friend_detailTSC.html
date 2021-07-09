@@ -1,11 +1,13 @@
-{% extends "baseTSC.html " %}
+{% extends 'index.html' %}
+{% block body_index %}
 {% load static %}
 {% load bootstrap3 %}
-{% block base %}
 
-<div class="w3-card-4 overflow-hidden position-static" style="height: 615px; width: auto; z-index:1;">
+<link rel="stylesheet" type="text/css" href="{% static 'css/TheSocialClub.css' %}">
+
+<div class="row w3-card-4 overflow-hidden w-100" style="height: 625px; position: fixed; top:38px; margin:0px;">
     <!------------------------------------------------------------>  
-    <div class="w3-col overflow-hidden" style="height: 100% ; width: 26%; background:#2A2F32; border: 1px solid black;">
+    <div class="col-lg-3 col-md-3 w3-hide-small overflow-hidden h-100" style="background:#2A2F32; border: 1px solid black; padding:0px;margin:0px;">
 
         <div class="w3-container w3-center text-white pt-1">
             <span class="p-2 w3-wide w3-xlarge w3-left">Chat</span>
@@ -46,11 +48,12 @@
     </div>
 
     <!------------------------------------------------------------>
-    <div class="w3-blue w3-col position-relative" style="width: 74%; height: 657px">
+    <div class="col-lg-9 col-md-9 col-sm-12 w3-blue position-relative h-100" style="padding:0px;margin:0px;">
         
-        <div class="title" style="background: #2A2F32; height: 10%; width: auto;">
+        <div class="title row w-100" style="background: #2A2F32; height: 10%; padding:0px;margin:0px;"><!--------------------------->
+
             {% for user in reciever %}
-            <div class="w3-row m-1">
+            <div class="col-7 w3-row">
                 <div class="w3-left m-2"><img src="{% if user.userinfo.propic %}{{user.userinfo.propic.url}}{% endif %}" style="height:35px;width:35px;" class="w3-circle"></div>
                 <div class="w3-col s6 ml-1 mt-1">
                     <div class="">{{user.username}}</div>
@@ -58,10 +61,57 @@
                 </div>
             </div>
             {% endfor %}
+
+
+            <div class="col-5 my-auto w3-hide-medium w3-hide-large">
+                <a onclick="document.getElementById('id01').style.display='block'">
+                    <img class="w3-round w3-right" src="{% static 'png/menu1.png' %}" style="height:35px;width:35px;">
+                </a>
+            </div>
+            
+            <div id="id01" class="w3-modal">
+                <div class="w3-modal-content w3-card-4 w3-2019-galaxy-blue">
+                  <header class="w3-container border-bottom"> 
+                    <span onclick="document.getElementById('id01').style.display='none'"
+                    class="w3-button w3-display-topright">&times;</span>
+                    <h2>Chat</h2>
+                  </header>
+
+                  <div class="w3-col overflow-auto" style="height: 500px; background:#2A2F32;">
+            
+                        {% for friend in friendlist %}  
+                        {% for user in friend.friends.all %}
+                            <a href="{% url 'TheSocialClub:friendsingle' slug=user.username pk=user.id %}">
+                            <div class="w3-row w3-hover-grey w3-text-white w-100" style="height:56px; overflow: hidden;">
+                                <img class="w3-circle w3-left w3-quarter m-2" src="{% if user.userinfo.propic %}{{user.userinfo.propic.url}}{% endif %}" style="height:40px;width:40px;">
+                                <div class="w3-col w-75 p-1">
+                                    <div class="p-1">
+                                        <div class="">{{ user.username}}<br/></div>
+                                        {% for post in lastmsg %}
+                                            
+                                            {% if post.sender == user and post.reciever == request.user or post.sender == request.user and post.reciever == user %}
+                                                {% if post   %}
+                                                    <div class="small w3-text-white">{{post.msg_content}}<br><br></div>         
+                                                {% endif %}
+                                            {% endif %}
+                                            
+                                        {% endfor %}
+                                    </div>
+                                </div>   
+                            </div>
+                            </a>
+                        {% endfor %}
+                        {% endfor %}
+        
+                    </div>  
+                  
+                </div>
+              </div>
+
         </div>
 
-        <div class="overflow-hidden w3-white" style="background: #2A2F32; height: 72.1%; width: auto;">      
-            <div id="chatbox" class="overflow-auto w3-white my-1" style="height: 475px; width: auto;">
+        <div class="overflow-hidden w3-white w-100" style="background: #2A2F32; height: 73.1%;"><!--------------------------->      
+            <div id="chatbox" class="overflow-auto w3-white my-1 w-100" style="height: 475px;">
                 
                 {% for post in ptp %}
                     <div class="row m-4">
@@ -122,78 +172,52 @@
                 
             </div>     
         </div>
-
-        <div class="w3-container w3-card" style="background: #2A2F32; height: 16.9%; width: auto; bottom: 0; z-index: 22; box-sizing: border-box;">
+                                            
+        <div class="w3-container w3-card w-100" style="background: #2A2F32; height: 16.9%; bottom: 0;"><!--------------------------->
             
             <div class="w3-left p-2 mt-2">
-                <button onclick="hide()" style="border: none; background: none;"><img src="{% static 'png/paper-clip.png' %}" style="height: 30px; width: 30px;"></button>
+                <button style="border: none; background: none;"><img src="{% static 'png/paper-clip.png' %}" style="height: 30px; width: 30px;"></button>
             </div>
            
             <form class="msgform" action="{% url 'TheSocialClub:createmsg' slug=slug pk=pk %}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     
                     <div class="w3-container row pt-2">
-                        <div class="w3-round-xlarge col" style="background: #364147; height: 60px;">
+                        <div class="w3-round-xlarge col" style="background: #364147; height: 90px;">
                             {{ form.as_p }}
                         </div>    
                         <input id='submit' type="submit" value="Post" class="ml-1 mt-3">
                     </div>
                 
             </form>
-
-            <script>
-
-                    console.log(window.location)
-                    var loc = window.location
-                    var myForm = $('.msgform')
-                    var msgInput = $('#msg-text')
-
-                    var wsStart = 'ws://'
-                    if(loc.protocol == 'https:'){
-                        wsStart = 'wss://'
-                    }
-
-                    var endpoint = wsStart + loc.host + loc.pathname
-                    var socket = new ReconnectingWebSocket(endpoint)
-
-                    socket.onmessage = function(e){
-                        console.log(e.data)
-                        chatbox.append()
-                    }
-                    socket.onopen = function(e){
-                        console.log('open', e)
-
-                          myForm.submit(function(event){
-                            event.preventDefault();
-                            var msgtext = msgInput.val()
-                            var data_dict = {'message':msgtext}
-                            socket.send(JSON.stringify(data_dict))
-                            myForm[0].reset()
-                        })
-                    }
-                    socket.onerror = function(e){
-                        console.log('error', e)
-                    }
-                    socket.onclose = function(e){
-                        console.log('close', e)
-                    }
-                         
-            </script>
             
         </div>
 
     </div>
-    
-    <!------------------------------------------------------------>
-    <div class="w3-col overflow-hidden d-none" style="height: 100%; width: 15%; background:#2A2F32;">
-    
-     
-        
-    </div>
-
-
 
 </div>
 
+<style>
 
-{% endblock base %}
+    ::-webkit-scrollbar {
+        width: 5px;
+      }
+      
+      /* Track */
+      ::-webkit-scrollbar-track {
+        background: none; 
+      }
+       
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: rgba(3, 163, 212, 0.308); 
+      }
+      
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(85, 85, 85); 
+      }
+
+</style>
+
+{% endblock body_index %}

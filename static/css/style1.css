@@ -64,7 +64,6 @@ dnav1 a {
 	height:42px;
 	width:200px;
 	position:relative;
-	float:left;
 	text-decoration: none;
 	
 }
@@ -73,7 +72,6 @@ dnav1 a {
 .navigation{
 	z-index:1;
 	position:fixed;
-	top:0;
 	transition: top 0.8s;
 	width: 100%;
 

@@ -1,41 +1,38 @@
-{% extends "baseTSC.html" %}
-{% block base %}
+{% extends 'index.html' %}
+{% block body_index %}
 {% load static %}
 
 
-<div class="w3-row" style="height: 625px; width: 100%; background: #06151d; position: fixed; z-index:0;">
+<div class="row w-100 border border-dark" style="height: 625px; position: fixed; top:38px; margin:0px;">
                 
-    <div class="w3-col overflow-hidden border" style="height: 100%; width: 21.5%; background-color:#185c83;">
+    <div class=" col-lg-3 w3-hide-small w3-hide-medium" style="background-color:#e4f0f6; padding:0px;margin:0px;">
 
-        <div class="search-container">
-            <form class="msgform" action="" method="POST">
-                {% csrf_token %}   
-                <input class="msgtext" type="text" placeholder="Search.." name="search">
-                <button type="submit" class="w3-gray"><img src="{% static 'png/loupe.png' %}" style="height:22px;width:22px;"></button>
-            </form>
-        </div>
-<br>
-        <div class="w3-card-4 p-2 row">
-            <div id="append" class="col-4 p-2 w3-hover-border-blue">
-                {% include "search/search.html" %}
-                {% block search_block %}
-                {% endblock search_block %}
+        <a href="{% url 'accounts:details' slug=request.user.username %}">
+            <div class="w3-row w3-round-large w-100 w3-hover-light-blue pl-2">
+                
+                <img class="w3-circle w3-left w3-quarter my-2" src="{% if request.user.userinfo.propic %}{{request.user.userinfo.propic.url}}{% endif %}" style="height:35px;width:35px;">
+                
+                <div class="w3-col w-75 p-2">
+                    <div class="p-1">
+                        <div class="w3-text-blue-gray">{{ request.user.first_name|capfirst}} {{ request.user.last_name|capfirst}}</div>
+                    </div>
+                </div>    
+                
             </div>
-        </div>
+        </a>
 
-
-
-
-
+        <div class="w3-row w3-round-large w-100 w3-hover-light-blue p-2">Friends</div>
+        <div class="w3-row w3-round-large w-100 w3-hover-light-blue p-2">Groups</div>
+        <div class="w3-row w3-round-large w-100 w3-hover-light-blue p-2">Blogs</div>
 
     </div>
 
-    <div class="w3-col overflow-auto border" style="height: 100%; width: 56%; background-color:#2A2F32;">
+    <div class="col-lg-6 col-md-8 row d-inline-block overflow-auto h-100" style="background-color:#e4f0f6; padding:0px;margin:0px;">
         
         <a onclick="document.getElementById('id01').style.display='block'">
-            <div class="w3-row mt-2 w3-border center bg-light w3-card-4 p-3 w3-round-large">
-                <div class="w3-left m-2"><img src="{% if request.user.userinfo.propic %}{{request.user.userinfo.propic.url}}{% endif %}" style="height:35px;width:35px;" class="w3-circle"></div>
-                <div class="w3-col s6 m-2 p-2 w-75 w3-round-xxlarge bg-secondary">
+            <div class="d-block w3-row mt-2 w3-border bg-light w3-card-4 p-3 w3-round-large w-75 mx-auto">
+                <div class="w3-left w3-col s1 my-auto"><img src="{% if request.user.userinfo.propic %}{{request.user.userinfo.propic.url}}{% endif %}" style="height:35px;width:35px;" class="w3-circle"></div>
+                <div class="w3-col ml-4 s10 my-auto p-2 w3-round-xxlarge bg-secondary">
                     <span class="text-decoration-none">Whats on your mind {{request.user.first_name.upper}}!</span>      
                 </div>
             </div>
@@ -61,21 +58,21 @@
         </div>
       
       
-        <div style="padding-left: 15%; padding-right: 15%;">
-            <div class="w3-centered p-3">
-                <div class="row">
-                    <div class="col">
-                        {% for post in posts %}
+        
+        <div class="col-lg-10 col-md-9 col-sm-10 d-block mx-auto">
+            <div class="row">
+                <div class="col">
+                    {% for post in posts %}
                         {% include "posts/_post.html" %}
-                        {% endfor %}
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
+        
 
     </div>
 
-    <div class="w3-col overflow-auto border" style="height: 100%; width: 22.5%; background-color:#37c495;">
+    <div class="col-lg-3 col-md-4 w3-hide-small overflow-auto d-inline-block h-100" style="background-color:#37c495; padding:0px;margin:0px;">
         
         <div class="container mt-3">
             <div class="row">
@@ -160,4 +157,27 @@
                             
 </script>
 
-{% endblock base %}
+<style>
+
+    ::-webkit-scrollbar {
+        width: 5px;
+      }
+      
+      /* Track */
+      ::-webkit-scrollbar-track {
+        background: none; 
+      }
+       
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: rgba(3, 163, 212, 0.308); 
+      }
+      
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgb(85, 85, 85); 
+      }
+
+</style>
+
+{% endblock body_index %}

@@ -1,17 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-<div style="height: 100%; width: 100%;  background:  #BEC3C9;; position: fixed; z-index:0;">
+<div class="row d-flex" style="background-color:#e4f0f6; width:100%; height: 625px; position: fixed; top:38px; margin:0px;">
 
-  <div class="w3-col overflow-hidden" style="height: 690px; width: 20%; background:#2A2F32;">
-
-    yo
-  </div>  
-
-  <div class="w3-col w3-border" style="height: 690px; width: 60%; overflow-y:auto; overflow-x:hidden;">
-  <br><br>
-    <div class="row">
+  <div class="col-lg-9 col-md-8 col-sm-9 d-inline-block row w3-border h-100" style="overflow-y:auto; overflow-x:hidden; padding:0px;margin:0px;"><!------------------------------------------------------------>
+    <br><br>
+    <div class="col-lg-9 col-md-9 col-sm-10 row mx-auto">
       {% for post in posts %}
-        <div class="col-8 overflow-hidden w3-card w3-round-large w3-text-black centerstage mt-3 mb-3 bg-white">
+        <div class="col-12 overflow-hidden w3-card w3-round-large w3-text-black centerstage mt-3 mb-3 bg-white">
             
             <div class="w3-row w3-text-white w-100 mt-2">
               <img class="w3-circle w3-left w3-quarter m-2" src="{% if post.author.userinfo.propic %}{{post.author.userinfo.propic.url}}{% endif %}" style="height:35px;width:35px;">
@@ -40,8 +35,54 @@
   </div>
 
 
-  <div class="w3-col overflow-hidden" style="height: 690px; width: 20%; background:#2A2F32;">
-  yo
+  <div class="col-lg-3 col-md-4 d-inline-block overflow-hidden h-100 w3-hide-small" style="background:#2A2F32; padding:0px;margin:0px;"><!------------------------------------------------------------>
+
+    <div class="w3-container h-50 overflow-auto">
+
+      <div class="p-3">
+        <span class="w3-text-white font-weight-bold">Most Popular</span>
+      </div>
+      
+      {% for post in mostpopular %}
+      <div class="w3-row w3-round-large w3-text-white w-100 w3-hover-gray pl-2">
+        <img class="w3-circle w3-left w3-quarter my-2" src="{% if post.postimage %}{{post.postimage.url}}{% endif %}" style="height:35px;width:35px;">
+        <a href="{{post.get_absolute_url}}">
+          <div class="w3-col w-75 p-2">
+            <div class="p-1">
+              <div class="w3-text-white">{{ post.title}} <span class="commentdate w3-text-green">by {{post.author|capfirst}}</span> </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+
+    </div>
+
+    <div class="h-50 border-top pl-3">
+
+      <div class="p-3">
+        <span class="w3-text-white font-weight-bold">Your Blogs</span>
+      </div>
+
+      <div class="overflow-auto h-75">
+        {% for post in mypost %}
+        <div class="w3-row w3-round-large w3-text-white w-100 w3-hover-gray pl-2">
+          <img class="w3-circle w3-left w3-quarter my-2" src="{% if post.postimage %}{{post.postimage.url}}{% endif %}" style="height:35px;width:35px;">
+          <a href="{{post.get_absolute_url}}">
+            <div class="w3-col w-75 p-2">
+              <div class="p-1">
+                <div class="w3-text-white">{{ post.title}}</div>
+              </div>
+            </div>
+          </a>
+        </div>
+        {% empty %}
+          <div class="p-3 m-2 w3-large w3-text-blue-grey"><b>No blogs available...</b></div>
+        {% endfor %}
+      </div>
+
+    </div>
+
   </div>  
 
 

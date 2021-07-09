@@ -20,33 +20,35 @@
 
 <body data-spy="scroll" data-target="#myScrollspy" data-offset="15">
 
-  <nav class='w3-bar navbarsticky'>
+  <div class='row'>
 
-          <div class="w3-black w3-left {% if not user.is_authenticated %}w-100{% else %}w-50{% endif %}">
+          <div class="w3-black w3-left {% if not user.is_authenticated %}col-12{% else %}col-6{% endif %}">
             <a href="{% url 'homepage:home' %}" class="w3-bar-item w3-button text-decoration-none">Home</a>
-            <a href="{% url 'blog:post_list' %}" class="w3-bar-item w3-button text-decoration-none">On The Blog</a>
+            <a href="{% url 'blog:post_list' %}" class="w3-bar-item w3-button text-decoration-none w3-hide-small">On The Blog</a>
             {% if not user.is_authenticated %}
             <a href="{% url 'accounts:login' %}" class="w3-bar-item w3-button text-decoration-none">Login</a>
             {% endif %}
-            <div class="w3-dropdown-hover">
-              <button class="w3-button">Dropdown</button>
+            <div class="w3-dropdown-hover w3-hide-large w3-hide-medium">
+              <button class="w3-button">More</button>
               <div class="w3-dropdown-content w3-bar-block w3-card-4">
-                <a href="#" class="w3-bar-item w3-button">Link 1</a>
-                <a href="#" class="w3-bar-item w3-button">Link 2</a>
-                <a href="#" class="w3-bar-item w3-button">Link 3</a>
+                <a href="{% url 'blog:post_new' %}" class="w3-bar-item w3-button text-decoration-none w3-hide-large w3-hide-medium">New Post</a>
+                <a href="{% url 'blog:post_draft_list' %}" class="w3-bar-item w3-button text-decoration-none w3-hide-large w3-hide-medium">Draft</a>
               </div>
             </div>
           </div>
         
           {% if user.is_authenticated %}
-          <div class="w3-half w3-blue w3-left">
-              <a href="{% url 'blog:post_new' %}" class="w3-bar-item w3-button text-decoration-none">New Post</a>
-              <a href="{% url 'blog:post_draft_list' %}" class="w3-bar-item w3-button text-decoration-none">Drafts</a>
-              <a href="#" class="w3-bar-item text-decoration-none">Hello! {{user.username}}</a>
+          <div class="col-6 w3-blue w3-left">
+              <a href="{% url 'blog:post_new' %}" class="w3-bar-item w3-button text-decoration-none w3-hide-small">New Post</a>
+              <a href="{% url 'blog:post_draft_list' %}" class="w3-bar-item w3-button text-decoration-none w3-hide-small">Drafts</a>
+              <a href="#" class="w3-bar-item text-decoration-none w3-hide-small w3-hide-medium">Hello! {{user.username|capfirst}}</a>
+              <a href="" class="w3-bar-item w3-button text-decoration-none">
+                <img class="w3-circle" src="{% if request.user.userinfo.propic %}{{request.user.userinfo.propic.url}}{% endif %}" style="height:22px;width:22px;">
+              </a>
               <a href="{% url 'accounts:logout'%}" class="w3-bar-item w3-button text-decoration-none">Logout</a>
             </div>
           {% endif %}
-  </nav>
+  </div>
 
   {% block content %}
   {% endblock %}
