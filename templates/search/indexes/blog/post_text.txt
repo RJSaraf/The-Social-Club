@@ -1,5 +1,0 @@
-{{ object.title }}
-{{ object.author.get_full_name }}
-{{ object.author }}
-{{ object.text }}
-{{ object.published_date }}
