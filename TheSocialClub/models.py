@@ -24,7 +24,7 @@ class Group(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         #self.discription_html = misaka.html(self.discription)
@@ -34,7 +34,7 @@ class Group(models.Model):
         #return reverse('TheSocialClub:single', kwargs={'pk':self.kwargs.get('pk')})
 
     class Meta:
-        ordering = ['name']   
+        ordering = ['name']
 
 
 class GroupMember(models.Model):
@@ -45,7 +45,7 @@ class GroupMember(models.Model):
         return self.user.username
 
     class Meta:
-        unique_together = ('group','user')    
+        unique_together = ('group','user')
 
 
 # Posts
@@ -68,14 +68,13 @@ class Post(models.Model):
         #self.message_html = misaka.html(self.message)
         super().save(*args , **kwargs)
 
-    class Meta: 
+    class Meta:
         ordering = ['-created_at']
-        unique_together = ['user', 'message']
 
 
 class FriendsList(models.Model):
     user = models.OneToOneField(User,related_name='person' , on_delete=models.CASCADE)
-    friends = models.ManyToManyField(User,related_name="friendslist")
+    friends = models.ManyToManyField(User,related_name="friendslist", blank=True)
     #message = models.ForeignKey(PrivateMessage ,related_name='person' , on_delete=models.CASCADE)
 
     def __str__(self):
@@ -90,7 +89,7 @@ class FriendsList(models.Model):
             self.friends.remove(account)
 
     def unfriend(self, removee):
-        self.remove_friend(removee) 
+        self.remove_friend(removee)
         friends_list = FriendsList.objects.get(user=removee)
         friends_list.remove_friend(self.user)
 
@@ -101,7 +100,7 @@ class FriendsList(models.Model):
 
     class Meta:
         unique_together = ('user',)
-        
+
 
 
 class FriendRequest(models.Model):
@@ -114,14 +113,14 @@ class FriendRequest(models.Model):
         return (self.sender.username + '-' + self.reciever.username)
 
     def accept(self):
-        
+
             try:
                 reciever_friend_list = FriendsList.objects.get(user=self.reciever)
                 if reciever_friend_list:
                     reciever_friend_list.add_friend(self.sender)
 
             except FriendsList.DoesNotExist:
-                reciever_new_friend_list = FriendsList.objects.create(user=self.reciever)    
+                reciever_new_friend_list = FriendsList.objects.create(user=self.reciever)
                 reciever_new_friend_list.add_friend(account=self.sender)
 
 
@@ -133,13 +132,13 @@ class FriendRequest(models.Model):
                     self.save()
 
             except FriendsList.DoesNotExist:
-                sender_new_friend_list = FriendsList.objects.create(user=self.sender)    
+                sender_new_friend_list = FriendsList.objects.create(user=self.sender)
                 sender_new_friend_list.add_friend(account=self.reciever)
                 self.is_active = False
                 self.save()
-                
-            
-                
+
+
+
     def decline(self):
         self.is_active = False
         self.save()
@@ -150,7 +149,7 @@ class FriendRequest(models.Model):
 
 
 class PrivateMessage(models.Model):
-    
+
     sender      = models.ForeignKey(User, related_name='sender', on_delete=models.CASCADE, blank=False)
     reciever    = models.ForeignKey(User, related_name='reciever', on_delete=models.CASCADE, blank=False)
     msg_content = models.TextField(blank=True)
@@ -162,10 +161,10 @@ class PrivateMessage(models.Model):
 
     def __str__(self):
         return (self.slug)
-    
+
     def save(self, *args, **kwargs):
         self.slug = slugify(str(self.sender) + '-' + str(self.reciever))
         super().save(*args, **kwargs)
 
-    class Meta: 
+    class Meta:
         ordering = ['-created_at']

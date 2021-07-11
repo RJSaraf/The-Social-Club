@@ -128,22 +128,30 @@
                         </div>
 
                         <div class="p-2 row d-block">
+                            {% if user.birth_date %}
                             <div class="col-12 row d-block p-2">
                                 <div class="w3-left mr-4 col-1"><img src="{% static 'png/gift-box.png'%}" style="height:25px;width:25px;" class="w3-circle"></div>
                                 <div class="col-12">{{user.birth_date}}</div>
                             </div>
+                            {% endif %}
+                            {% if user.user %}
                             <div class="col-12 row d-block p-2">
                                 <div class="w3-left mr-4 col-1"><img src="{% static 'png/businessman.png'%}" style="height:25px;width:25px;" class="w3-circle"></div>
                                 <div class="col-12">{{user}}</div>
                             </div>
+                            {% endif %}
+                            {% if user.profession %}
                             <div class="col-12 row d-block p-2">
                                 <div class="w3-left mr-4 col-1"><img src="{% static 'png/education.png'%}" style="height:25px;width:25px;" class="w3-circle"></div>
                                 <div class="col-12">{{user.profession}}</div>
                             </div>
+                            {% endif %}
+                            {% if user.address %}
                             <div class="col-12 row d-block p-2">
                                 <div class="w3-left mr-4 col-1"><img src="{% static 'png/google-maps.png'%}" style="height:25px;width:25px;" class="w3-circle"></div>
                                 <div class="col-12">{{user.address}}, {{user.city}} {{user.state}}</div>
                             </div>
+                            {% endif %}
                         </div>
 
                     </div>
@@ -154,11 +162,11 @@
                                 <span class="w3-xlarge"><b>Friends</b></span>
                                 <span class="w3-right w3-text-blue">See All Friends</span>
                             </div>
-
+                            
                             <div class="col-12">
                                 {% for friend in friendlist %}
                                     <span class="w3-text-blue-gray">Friends {{friend.friends.count}}</span>
-                                    <span class="w3-text-blue-gray">(Mutual Friends {{mutual_friend}})</span>
+                                    {% if not user.user == request.user %}<span class="w3-text-blue-gray">(Mutual Friends {{mutual_friend}})</span>{% endif %}
                                 {% endfor %}
                             </div>
                         </div>

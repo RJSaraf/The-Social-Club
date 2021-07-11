@@ -35,7 +35,7 @@ class UserView(DetailView, LoginRequiredMixin):
    context_object_name = 'user'
    model = UserInfo
    template_name = "user_profile.html"
-       
+
    def is_friend(self):
       user = get_object_or_404(User, username=self.kwargs.get('slug'))
       try:
@@ -58,63 +58,59 @@ class UserView(DetailView, LoginRequiredMixin):
    def intersection(self, lst1, lst2):
     lst3 = [value for value in lst1 if value in lst2]
     return lst3
-            
+
    def get_context_data(self, *args, **kwargs):
-      user = get_object_or_404(User, username=self.kwargs.get('slug'))
-      Friends = get_object_or_404(FriendsList, user=user).friends.all().order_by('id')[:9]
-      blogcount = models.Post.objects.filter(author=user, is_published=True).count()
-      userFL = list(get_object_or_404(FriendsList, user=user).friends.all())
-      requserFL = list(get_object_or_404(FriendsList, user=self.request.user).friends.all())
-      mutual_friend = self.intersection(lst1=userFL, lst2=requserFL)
-      print(len(mutual_friend))
 
-      context = super(UserView, self).get_context_data(*args, **kwargs)
-      context['blogcount'] = blogcount
-      context['limitedbloglist'] = models.Post.objects.filter(author=user, is_published=True)[:9]
-      context['posts'] = Post.objects.filter(user=user)
-      context['form'] = PostForm
-      context['friendlist'] = FriendsList.objects.filter(user=user)
-      context['limitedfriendlist'] = Friends #friendslist
-      context['sentfriendrequest'] = FriendRequest.objects.filter(sender=self.request.user, reciever=user, is_active=True) # Cancel Request
-      context['is_active'] = {"yn" : self.is_active()} # Add Friend
-      context['friendrequest'] = FriendRequest.objects.filter(reciever=self.request.user, is_active=True) #For Navbar
-      context['is_friend'] = {"isf" : self.is_friend()} # Is Friend
-      context['mutual_friend'] = len(mutual_friend)
-      return context
+            user = get_object_or_404(User, username=self.kwargs.get('slug'))
+            userFL = list(get_object_or_404(FriendsList, user=user).friends.all())
+            requserFL = list(get_object_or_404(FriendsList, user=self.request.user).friends.all())
+            mutual_friend = self.intersection(lst1=userFL, lst2=requserFL)
+            Friends = get_object_or_404(FriendsList, user=user).friends.all().order_by('id')[:9]
+            blogcount = models.Post.objects.filter(author=user, is_published=True).count()
 
-   
-class FeedbackView(TemplateView):
-   template_name = "feedback.html"
+            context = super(UserView, self).get_context_data(*args, **kwargs)
+            context['blogcount'] = blogcount
+            context['limitedbloglist'] = models.Post.objects.filter(author=user, is_published=True)[:9]
+            context['posts'] = Post.objects.filter(user=user)
+            context['form'] = PostForm
+            context['friendlist'] = FriendsList.objects.filter(user=user)
+            context['limitedfriendlist'] = Friends #friendslist
+            context['sentfriendrequest'] = FriendRequest.objects.filter(sender=self.request.user, reciever=user, is_active=True) # Cancel Request
+            context['is_active'] = {"yn" : self.is_active()} # Add Friend
+            context['friendrequest'] = FriendRequest.objects.filter(reciever=self.request.user, is_active=True) #For Navbar
+            context['is_friend'] = {"isf" : self.is_friend()} # Is Friend
+            context['mutual_friend'] = len(mutual_friend)
+            return context
 
 
 class UserInfoCreateView(CreateView):
      login_url = '/'
      redirect_field_name = 'user_profile.html'
-     
+
      model = UserInfo
      form_class = UserForm
      template_name = "EditUserInfo.html"
 
 
      def form_valid(self, form):
-        article = form.save(commit=False)
-        article.user = self.request.user
-        #article.save()  # This is redundant, see comments.
-        return super(UserInfoCreateView, self).form_valid(form)
+         article = form.save(commit=False)
+         article.user = self.request.user
+         #article.save()  # This is redundant, see comments.
+         return super(UserInfoCreateView, self).form_valid(form)
 
 
 
 class UserInfoUpdateView(UpdateView):
      login_url = '/'
      redirect_field_name = 'user_profile.html'
-     
+
      model = UserInfo
      form_class = UserForm
      template_name = "EditUserInfo.html"
 
 
 class SignUp(CreateView):
-   
+
    form_class = forms.UserCreateForm
    success_url = reverse_lazy('accounts:login')
    template_name = 'signup.html'

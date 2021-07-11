@@ -86,12 +86,7 @@
             </div>
             
 
-            <a class="w3-bar-item w3-button" 
-            {% if request.user.userinfo %}
-            href="{% url 'accounts:details' slug=request.user.username %}"  
-            {% else %}
-            href="{% url 'accounts:create_user_info' slug=request.user.username %}"
-            {% endif %}>
+            <a class="w3-bar-item w3-button" href="{% url 'accounts:details' slug=request.user.userinfo.slug %}">
                 <img class="w3-circle" src="{% if request.user.userinfo.propic %}{{request.user.userinfo.propic.url}}{% endif %}" style="height:22px;width:22px;">
             </a>
             

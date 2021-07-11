@@ -6,7 +6,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View, TemplateView, ListView, DetailView, CreateView
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 
-from .models import Profileimage
 from accounts import models
 from accounts.models import UserInfo
 from accounts.forms import UserForm
@@ -24,8 +23,22 @@ class HomeView(TemplateView):
     def get_context_data(self, *args, **kwargs):
 
         user = self.request.user if type(self.request.user) is not AnonymousUser else None
+
         try:
-            
+            user_profile = UserInfo.objects.get(user=user)
+
+        except UserInfo.DoesNotExist:
+            user_profile = UserInfo.objects.create(user=user)
+            user_profile.save()
+
+        try:
+            friend_list = FriendsList.objects.get(user=self.request.user)
+
+        except FriendsList.DoesNotExist:
+            friend_list = FriendsList.objects.create(user=self.request.user)
+            friend_list.save()   
+
+        try: 
             context = super(HomeView, self).get_context_data(*args, **kwargs)
             context['friendlist'] = FriendsList.objects.filter(user_id=user.id) 
             context['friendrequest'] = FriendRequest.objects.filter(reciever=user, is_active=True)
@@ -33,3 +46,4 @@ class HomeView(TemplateView):
 
         except :
             pass
+

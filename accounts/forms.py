@@ -15,10 +15,10 @@ class UserCreateForm(UserCreationForm):
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
         self.fields['first_name'].label = 'First Name'
-        self.fields['last_name'].label = 'Last Name' 
+        self.fields['last_name'].label = 'Last Name'
         self.fields['username'].label = 'Username'
         self.fields['email'].label = 'Email Address'
-        
+
 
 class UserForm(forms.ModelForm):
 
@@ -37,12 +37,13 @@ class UserForm(forms.ModelForm):
             'state':forms.TextInput(attrs={'class':'a'}),
             'city':forms.TextInput(attrs={'class':'a'}),
             'address':forms.Textarea(attrs={'class':'a'}),
-            'propic':forms.FileInput(attrs={'class':'margin-left'}),
+            'propic':forms.FileInput(attrs={'class':'m-2 border w3-blue-gray w3-round-large'}),
+            'cover':forms.FileInput(attrs={'class':'m-2 border w3-blue-gray w3-round-large'}),
 
         }
 
     def __init__(self,*args,**kwargs):
-        super().__init__(*args,**kwargs)   
+        super().__init__(*args,**kwargs)
         self.fields['birth_date'].label = 'Birth Date'
         self.fields['age'].label = 'Age'
         self.fields['phone_number'].label = 'Mobile'
@@ -53,8 +54,8 @@ class UserForm(forms.ModelForm):
         self.fields['city'].label = 'City'
         self.fields['address'].label = 'Address'
         self.fields['propic'].label = 'Profile Image '
-        self.fields['propic'].label = 'Cover Photo '
+        self.fields['cover'].label = 'Cover Photo '
 
-   
+
 
 
